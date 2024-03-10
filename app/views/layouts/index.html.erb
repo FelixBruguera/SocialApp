@@ -1,0 +1,45 @@
+    <%= render partial:'layouts/hero', locals: {status: 'login'} %>
+    <head>
+        <script href='application.js' defer></script>
+        <% stylesheet_link_tag 'general'%>
+    </head>
+    <body>
+        <%= image_tag('bg1.jpg', class: 'bg-1 background-img') %>
+        <%= image_tag('bg2.jpg', class: 'bg-2') %>
+        <%= image_tag('bg3.jpg', class: 'bg-3') %>
+        <div id='landing'>
+            <div id='landing-left'>
+                <p>SocialApp helps you connect and share with the people you love</p>
+            </div>
+            <div class='credits-1 credits'>
+                <span class="icon is-left has-text-light">
+                    <i class="fas fa-camera"></i>
+                </span>
+                <a href="https://unsplash.com/@ryoji__iwata">Ryoji Iwata</a>
+            </div>
+            <div class='credits-2'>
+                <span class="icon is-left has-text-light">
+                    <i class="fas fa-camera"></i>
+                </span>
+                <a href="https://unsplash.com/@alex_rainer">Alex Rainer</a>
+            </div>
+            <div class='credits-3'>
+                <span class="icon is-left has-text-light">
+                    <i class="fas fa-camera"></i>
+                </span>
+                <a href="https://unsplash.com/@jubilation">Isaac N.</a>
+            </div>
+            <%# <div class='credits-4'>
+                <span class="icon is-left has-text-light">
+                    <i class="fas fa-camera"></i>
+                </span>
+                <a href="https://unsplash.com/@mariopurisic">Mario Purisic</a>
+            </div> %>
+            <div id='landing-right'>
+                <%= turbo_frame_tag :signup do %>
+                    <%= link_to 'Sign Up', new_user_registration_path, id: 'sign-up-link' %>
+                <% end %>
+            </div>
+        </div>
+    </body>
+

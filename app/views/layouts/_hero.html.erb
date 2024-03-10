@@ -1,0 +1,53 @@
+<head>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <% stylesheet_link_tag 'general'%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script defer src='application.js'></script>
+</head>
+<div class="hero-container">
+    <a href= <%= root_path %>>
+        <p class='hero-title'>SocialApp</p>
+    </a>
+    <div class="hero-right">
+    <% if status == 'login' %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {id: 'new_user_index'}) do |f| %>
+                <span class="icon is-left has-text-link">
+                <i class="fas fa-envelope"></i>
+                </span>
+                <%= f.email_field(:email, placeholder: 'you@email.com', class: '') %>
+                <span class="icon is-small is-left has-text-link">
+                <i class="fas fa-lock"></i>
+                </span>
+                <%= f.password_field(:password, placeholder: '******', class: '') %>
+            <%= f.submit 'Log in', class: 'button is-link is-small' %>
+        </div>
+        <% end %>
+    <% else %>
+            <div id="hero-icons">
+                    <span class="icon is-medium is-left">
+                        <button popovertarget='friendship' id='friends'><i class="fas fa-lg fa-users"></i></button>
+                    </span>
+                    <%= render partial: 'friends/friend_requests', locals: {user: current_user} %>
+                    <span class="icon is-medium is-left">
+                        <i class="fas fa-comment"></i>
+                    </span>
+                    <span class="icon is-medium is-link" data-controller='notifications'>
+                        <button popovertarget='notif' id='notifications-bell'>
+                            <% if current_user.notifications.where(seen:false).count > 0 %>
+                                <div class='hero-count' data-notifications-target='notisCount'><%= current_user.notifications.where(seen:false).count%></div>
+                            <% end %>
+                            <i class="fas fa-lg fa-bell"></i>
+                            </button>
+                    </span>
+                    <%= render partial: 'notifications/notification_bar', locals: {user: current_user} %>
+            </div>
+                <%= link_to destroy_user_session_path, data: { turbo_method: :delete } do %>
+                <span class="icon is-medium is-left">
+                    <i class="fas fa-door-open"></i>
+                </span>
+                <% end %>
+    <% end %>
+    </div>
+</div>
+
+<%# if %>

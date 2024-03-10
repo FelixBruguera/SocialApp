@@ -1,0 +1,31 @@
+<head>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <% stylesheet_link_tag 'general'%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script defer src='application.js'></script>
+</head>
+<body>
+    <div popover id="notif">
+        <div class='notifications-bar' data-controller='notifications'>
+            <%= link_to 'Mark all as read', 'update_notifications', data: {turbo_method: :post, 'notifications-action': 'click->notifications#read'}, remote: true, class: 'notifications-read' %>
+            <% user.notifications.order('created_at DESC').limit(7).each do |notf| %>
+            <% if notf.seen %>
+                <div class='noti-seen'>
+            <% else %>
+                <div class='noti' data-notifications-target='notis'>
+            <% end %>
+                <%= image_tag(notf.sender.profile_picture, class: 'profile-pic') %>
+                <p class='notification-user'>
+                    <%= link_to post_path(notf.post_id) do %>
+                        <%= notf.sender.first_name+' '+notf.sender.last_name+' '+notf.action+' your post'%>
+                    <% end %>
+                    <p class='noti-date'><%= notf.created_at.strftime('%D') %></p>
+                </p>
+            </div>
+            <% end %>
+            <% if current_user.notifications.count > 7 %>
+                <%= link_to 'See all', notifications_path, id: 'see-notifications' %>
+            <% end %>
+        </div>
+    </div>
+</body>

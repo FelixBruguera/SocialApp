@@ -1,0 +1,82 @@
+<head>
+    <% stylesheet_link_tag 'general'%>
+    <script href='application.js' defer></script>
+</head>
+
+<div class=<%= location == 'feed' ? 'post-feed' : 'post'%>>
+    <%= link_to post_path(post), class: 'link-post' do %>
+    <div class="user-pic">
+        <%= image_tag(post.user.profile_picture, class: 'profile-pic') %>
+        <div class="user-date">
+            <p class='post-user'><%= post.user.first_name+' '+post.user.last_name %></p>
+            <p class='post-date'><%= post.created_at.strftime('%D at %R') %></p>
+        </div>
+    </div>
+        <p class='post-body'><%= post.body %></p>
+        <% if post.shared_post.nil? %>
+            <% if post.image.attached? %>
+                <%= image_tag(post.image, class: 'post-pic') %>
+            <% end %>
+        <% else %>
+            <%= render partial:'shared_post', locals: {'post': Post.find(post.shared_post)}%>
+        <% end %>
+    <% end %>
+    <div class="post-lower">
+        <div class="post-info">
+            <span class="icon-text is-small is-centered has-text-link" id='reactions' data-controller='likes'>
+                <p class='reactions-count' data-likes-target='count'><%= post.reactions.count %></p>
+                <% if post.reactions.where(user_id: current_user.id).exists? %>
+                    <%= link_to reactions_path(user_id: current_user.id, post_id: post.id, reaction: 'like'), data: {turbo_method: :post, remote: :true, 'likes-target': 'button'} do %>
+                            <i class="fas fa-thumbs-up" data-action='click->likes#toggle'></i>
+                    <% end %>
+                <% else %>
+                    <%= link_to reactions_path(user_id: current_user.id, post_id: post.id, reaction: 'like'), class: 'unliked', data: {turbo_method: :post, remote: :true, 'likes-target': 'button'} do %>
+                            <i class="fas fa-thumbs-up" data-action='click->likes#toggle'></i>
+                    <% end %>
+                <% end %>
+            </span>
+            <span class="icon-text is-small is-centered has-text-link" id='comments-count'>
+                <p><%= post.comments.count %></p>
+                <i class="fas fa-comments"></i>
+            </span>
+            <span class="icon-text is-small is-centered has-text-link" id='share'>
+                <p><%= post.shares.count %></p>
+                <button popovertarget='share-post-<%= post.id%>'><i class="fas fa-share is-medium"></i></button>
+                    <div popover id='share-post-<%= post.id%>'>
+                        <p id='sharing-title'>Sharing post</p>
+                        <div id='sharing-form'>
+                            <div id="user-pic">
+                                <%= image_tag(current_user.profile_picture, class: 'profile-pic') %>
+                            </div>
+                        <%= form_with url: posts_path, method: :post do |f| %>
+                        <%= f.hidden_field :user_id, :value => current_user.id %>
+                        <%= f.hidden_field :shared_post, :value => post.id %>
+                        <div id="new-post-fields">
+                            <%= f.text_field :body, placeholder: "Write something", id: 'text-field'%>
+                        </div>
+                        <%= f.submit 'Share', class:'button is-link is-small'%>
+                        <% end %>
+                        </div>
+                    </div>
+            </span>
+        </div>
+            <%= turbo_frame_tag id='comments-frame', src:new_comment_path(user_id: current_user.id, post_id: post.id)%>
+        <div id='comments_<%=post.id%>'>
+            <% comments = location == 'feed' ? post.comments.limit(3) : post.comments %>
+            <% comments.each do |comment| %>
+                <div class='comment'>
+                    <div class="user-pic">
+                        <%= image_tag(comment.user.profile_picture, class: 'profile-pic') %>
+                        <div class="user-date">
+                            <p class='post-user'><%= comment.user.first_name+' '+comment.user.last_name %></p>
+                            <%= comment.body %>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+            <% if location == 'feed' && post.comments.count > 3 %>
+                <%= link_to 'View more comments', post_path(post), class: 'more-comments'%>
+            <% end %>
+        </div>
+    </div>
+</div>

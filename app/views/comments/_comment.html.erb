@@ -1,0 +1,9 @@
+<div class='comment'>
+    <div class="user-pic">
+        <%= image_tag(@comment.user.profile_picture, class: 'profile-pic') %>
+        <div class="user-date">
+            <p class='post-user'><%= @comment.user.first_name+' '+@comment.user.last_name %></p>
+            <%= @comment.body %>
+        </div>
+    </div>
+</div>

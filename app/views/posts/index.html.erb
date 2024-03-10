@@ -1,0 +1,64 @@
+<head>
+    <% stylesheet_link_tag 'general'%>
+    <script href='application.js' defer></script>
+</head>
+<%= render partial:'layouts/hero', locals: {'status': 'feed'}%>
+<div id='feed'>
+        <div id='new-post'>
+        <div id="user-pic">
+            <%= image_tag(current_user.profile_picture, class: 'profile-pic') %>
+        </div>
+        <%= form_with model: @post, method: :post do |f| %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+         <div id="new-post-fields">
+             <%= f.text_field :body, placeholder: "What's on your mind, #{current_user.first_name}?", id: 'text-field'%>
+             <div id='post-image-field'>
+                <%= f.label :image do %>
+                <i class='fas fa-images has-text-link is-small'></i>
+                    <%= f.file_field :image%>
+                <% end %>
+            </div>
+         </div>
+         <%= f.submit 'Send', class:'button is-link is-small'%>
+        <% end %>
+    </div>
+<div id='content'>
+    <div id='links'>
+        <div id="link-icon">
+            <i class="fas fa-user has-text-link"></i>
+            <%= link_to 'Profile', user_path(current_user)%>
+            </div>
+            <div id="link-icon">
+                <i class="fas fa-users has-text-link"></i>
+                <%= link_to 'Groups', user_path(current_user)%>
+            </div>
+                <div id="link-icon">
+                    <i class="fas fa-bars has-text-link"></i>
+                    <%= link_to 'Settings', user_path(current_user)%>
+                </div>
+    </div>
+    <div id="posts">
+        <% @feed.each do |post| %>
+                <%= render partial:'post', locals: {post: post, location: 'feed'}%>
+        <% end %>
+    </div>
+    <div id='people' data-controller='friendrequests'>
+    <% unless @people.empty? %>
+            <p id='people-title'>People you might know</p>
+            <% @people.each do |p|%>
+                <div id="user-pic">
+                    <%= link_to user_path(p.id) do %>
+                        <%= image_tag(p.profile_picture, class: 'profile-pic') %>
+                        <div id="user-date">
+                            <p id='post-user'><%= p.first_name+' '+p.last_name %></p>
+                            <%= link_to friend_requests_path(sender: current_user.id, receiver: p.id), data: {turbo_method: :post} do %>
+                                <button class='button is-small unfocused' data-friendrequests-target='button' data-action='click->friendrequests#change'>Add Friend</button>
+                            <% end %>
+                    <% end %>
+                    </div>
+                </div>
+            <% end %>
+    <% end %>
+    </div>
+</div>
+</div>
