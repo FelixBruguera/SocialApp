@@ -1,13 +1,7 @@
-<head>
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <% stylesheet_link_tag 'general'%>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script defer src='application.js'></script>
-</head>
 <body>
     <div popover id="notif">
-        <div class='notifications-bar' data-controller='notifications'>
-            <%= link_to 'Mark all as read', 'update_notifications', data: {turbo_method: :post, 'notifications-action': 'click->notifications#read'}, remote: true, class: 'notifications-read' %>
+        <div class='notifications-bar'>
+            <%= link_to 'Mark all as read', '/update_notifications', data: {turbo_method: :post, 'action': 'click->notifications#read'}, remote: true, class: 'notifications-read' %>
             <% user.notifications.order('created_at DESC').limit(7).each do |notf| %>
             <% if notf.seen %>
                 <div class='noti-seen'>

@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
     end
 
     def create
-        @comment = Comment.new(comment_params.except(:authenticity_token, :commit))
+        @comment = Comment.new(comment_params)
         respond_to do |format|
             if @comment.save
                 poster = @comment.post.user

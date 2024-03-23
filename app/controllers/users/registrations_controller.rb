@@ -3,6 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
+  before_action :set_defaults, only: [:create]
 
   # GET /resource/sign_up
   # def new
@@ -42,12 +43,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :birthday, :email, :password, :password_confirmation])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :birthday, :email, :password, :password_confirmation, :cover_picture, :profile_picture])
   end
 
   #If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:profile_picture, :current_password])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:cover_picture, :profile_picture, :current_password])
+  end
+
+  def set_defaults
+    params[:user][:profile_picture] = File.open('app/assets/images/pfp.jpg')
+    params[:user][:cover_picture] =  File.open('app/assets/images/cover_default.jpg')
   end
 
   # The path used after sign up.

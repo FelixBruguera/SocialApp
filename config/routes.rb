@@ -19,4 +19,6 @@ Rails.application.routes.draw do
   resources :notifications
   resources :friend_requests
   post 'update_notifications', to: 'notifications#update_notifications'
+  post 'load_posts(:page)', to: 'posts#index'
+  post 'users/:id(:page)', to: 'users#show'
 end

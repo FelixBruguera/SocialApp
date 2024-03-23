@@ -1,0 +1,133 @@
+<head>
+    <% stylesheet_link_tag 'general'%>
+</head>
+<style>
+    body {
+        background-color
+    }
+</style>
+<%= render partial:'layouts/hero', locals: {'status': 'feed'}%>
+<% if @user == current_user %>
+    <%= form_with model: @user, data: {controller: 'editprofile', turbo: false}, id:'profile-pictures', method: :patch do |f| %>
+    <div id="cover-form">
+        <%= f.file_field :cover_picture, class: 'edit-form', data: {'editprofile-target': 'cover'}%></div>
+        <%= image_tag(@user.cover_picture, class: 'cover-pic') %>
+    <div id='profile-info'>
+        <div id="info-pic-button">
+            <div id="profile-user-pic">
+                <div id="pfp-form">
+                    <%= f.file_field :profile_picture, class: 'edit-form', id: 'pfp-input',  data: {'editprofile-target': 'profile'}%>
+                </div>
+                <%= image_tag(@user.profile_picture, id: 'user-profile-pic') %>
+            </div>
+            <div id="info-loc-age">
+                <p id='profile-name'><%= @user.first_name+' '+@user.last_name%></p>
+                <div id="location-age">
+                <div class="edit-form" id="location-edit" data-editprofile-target='location'>
+                    <%= f.label :location, 'Location: '%>
+                    <%= f.select(:location, Countries: @countries.values) %>
+                </div>
+                <% unless @user.location.empty? %>
+                        <div id="profile-location" data-editprofile-target='currentLocation'>
+                            <svg id='location' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
+                            <p id='profile-location'><%= @user.location%></p>
+                            <%= image_tag("https://flagsapi.com/#{country_code(@user.location)}/flat/64.png", class:'flag')%>
+                        </div>
+                <% end %>
+                        <div id="profile-age">
+                            <% age = (Date.today.year - @user.birthday.year).to_i %>
+                            <% if @user.birthday.yday > Date.today.yday then age = age-1 end%>
+                            <p>Age: <%= age %></p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class='button is-small unfocused' data-editprofile-target='editButton' data-action='click->editprofile#edit'>Edit Profile</div>
+        <button class='edit-form' data-editprofile-target='cancel' data-action='click->editprofile#cancel'>Cancel</button>
+        <%= f.submit 'Save changes', class:'hidden', data: {'editprofile-target': 'submit'}%>
+    </div>
+<% end %>
+<% else %>
+    <div id="profile-pictures">
+        <%= image_tag(@user.cover_picture, class: 'cover-pic') %>
+        <div id='profile-info'>
+            <div id="info-pic-button">
+                <div id="profile-user-pic">
+                    <%= image_tag(@user.profile_picture, class: 'user-profile-pic') %>
+                </div>
+                <div id="info-loc-age">
+                    <p id='profile-name'><%= @user.first_name+' '+@user.last_name%></p>
+                    <div id="location-age">
+                    <% unless @user.location.empty? %>
+                            <div id="profile-location" data-editprofile-target='currentLocation'>
+                                <svg id='location' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
+                                <p id='profile-location'><%= @user.location%></p>
+                                <%= image_tag("https://flagsapi.com/#{country_code(@user.location)}/flat/64.png", class:'flag')%>
+                            </div>
+                    <% end %>
+                            <div id="profile-age">
+                                <% age = (Date.today.year - @user.birthday.year).to_i %>
+                                <% if @user.birthday.yday > Date.today.yday then age = age-1 end%>
+                                <p>Age: <%= age %></p>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <% if @friendship == 'friends' %>
+                    <button popovertarget='confirmation' class='button is-small unfocused' data-controller= 'friendship' data-friendship-target='button' data-action='mouseover->friendship#destroy mouseout->friendship#restore'>Friends</button>
+                    <div popover id='confirmation'>
+                        <div id="confirmation-box">
+                            <p id='confirmation-title'>Are you sure?</p>
+                            <p id='confirmation-text'>Click outside to cancel</p>
+                            <%= link_to 'Unfriend', friend_path(user_id: current_user.id, friend_id: @user), data: {turbo_method: :delete}, class:'button is-small is-danger'%>
+                        </div>
+                    </div>
+            <% elsif @friendship == 'noFriends' %>
+                <%= link_to friend_requests_path(sender: current_user.id, receiver: @user), data: {turbo_method: :post, controller: 'friendrequests'} do %>
+                    <button class='button is-small unfocused' data-friendrequests-target='button' data-action='click->friendrequests#change'>Add Friend</button>
+                <% end %>
+            <% else %>
+                    <button class='button is-small unfocused' disabled><%= @friendship %></button>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+<div id="profile-lower">
+    <div id="user-boxes">
+        <div id='profile-user-bio'>
+                <div data-controller='truncate'>
+                    <p class='profile-title'>Info</p>
+                    <p id='profile-bio' data-truncate-target='output'><%= @user.bio %></p>
+                    <p class='small-text' data-truncate-target='seeMore' data-action='click->truncate#more'>See more</p>
+                </div>
+        </div>
+        <div id='profile-user-photos'>
+            <p class='profile-title'>Pictures</p>
+            <div id='photo-box'>
+                <% @photos.each do |photo|%>
+                    <%= link_to post_path(photo) do %>
+                        <%= image_tag(photo.image, class: 'photo') %>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div id="profile-content">
+    <% if @user == current_user %>
+        <div id="profile-new-post"><%= turbo_frame_tag id='new-post-frame', src: new_post_path(post_type: 'new')%></div>
+    <% end %>
+    <% if is_friend?(@user, current_user) || @user == current_user %>
+        <div id="posts-container">
+            <div id='posts'>
+                <% @posts.each do |post| %>
+                    <%= render partial:'posts/post', locals: {post: post, location: 'feed'}%>
+                <% end %>
+            </div>
+            <div class='load-posts' data-controller='pagination'>
+                <span class='hidden' data-pagination-target='maxPages'><%= @posts.total_pages %></span>
+                <%= link_to 'Load more', "/users/#{@user.id}?page=1", remote: true, data: {turbo_method: :post, 'pagination-target': :link, action: 'click->pagination#update'}%>
+            </div>
+        </div>
+    <% end %>
+    </div>
+</div>

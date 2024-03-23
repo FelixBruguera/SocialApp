@@ -12,4 +12,5 @@ class User < ApplicationRecord
   has_one_attached :profile_picture
   has_many :sent_notifications, class_name: 'Notification', foreign_key: 'sender'
   has_many :notifications, class_name: 'Notification', foreign_key: 'receiver'
+  has_one_attached :cover_picture
 end

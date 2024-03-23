@@ -43,13 +43,13 @@ import "controllers"
 //     like.forEach(likePost)
 // })
 
-const notis = document.querySelectorAll('.noti')
-const notiRead = document.querySelector('.notifications-read')
-const notiCount = document.querySelector('.hero-count')
-notiRead.addEventListener('click', function() {
-    for (const noti of notis) {
-        noti.className = 'noti-seen'
-        notiCount.textContent = ''
-        notiCount.className = 'noti-count-zero'
-    }
-})
+// const notis = document.querySelectorAll('.noti')
+// const notiRead = document.querySelector('.notifications-read')
+// const notiCount = document.querySelector('.hero-count')
+// notiRead.addEventListener('click', function() {
+//     for (const noti of notis) {
+//         noti.className = 'noti-seen'
+//         notiCount.textContent = ''
+//         notiCount.className = 'noti-count-zero'
+//     }
+// })

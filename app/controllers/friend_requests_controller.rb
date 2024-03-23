@@ -19,15 +19,6 @@ class FriendRequestsController < ApplicationController
         @friend_request.destroy
     end
 
-    def self.find_request(user_id, friend_id)
-        @request = FriendRequest.where(sender: user_id, receiver: friend_id)
-        if @request.exists?
-            @request
-        else
-            FriendRequest.where(sender: friend_id, receiver: user_id)
-        end
-    end
-
     private
     
     def friend_request_params

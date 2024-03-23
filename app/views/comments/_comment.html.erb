@@ -1,8 +1,12 @@
 <div class='comment'>
     <div class="user-pic">
-        <%= image_tag(@comment.user.profile_picture, class: 'profile-pic') %>
+        <%= link_to user_path(@comment.user) do %>
+            <%= image_tag(@comment.user.profile_picture, class: 'profile-pic') %>
+        <% end %>
         <div class="user-date">
+        <%= link_to user_path(@comment.user) do %>
             <p class='post-user'><%= @comment.user.first_name+' '+@comment.user.last_name %></p>
+        <% end %>
             <%= @comment.body %>
         </div>
     </div>

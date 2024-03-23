@@ -1,26 +1,29 @@
 <head>
     <% stylesheet_link_tag 'general'%>
-    <script href='application.js' defer></script>
 </head>
 
 <div class=<%= location == 'feed' ? 'post-feed' : 'post'%>>
-    <%= link_to post_path(post), class: 'link-post' do %>
-    <div class="user-pic">
-        <%= image_tag(post.user.profile_picture, class: 'profile-pic') %>
-        <div class="user-date">
-            <p class='post-user'><%= post.user.first_name+' '+post.user.last_name %></p>
-            <p class='post-date'><%= post.created_at.strftime('%D at %R') %></p>
-        </div>
-    </div>
-        <p class='post-body'><%= post.body %></p>
-        <% if post.shared_post.nil? %>
-            <% if post.image.attached? %>
-                <%= image_tag(post.image, class: 'post-pic') %>
+            <div class="user-pic">
+                <%= link_to user_path(post.user) do %>
+                    <%= image_tag(post.user.profile_picture, class: 'profile-pic') %>
+                <% end %>
+                <div class="user-date">
+                    <%= link_to user_path(post.user) do %>
+                        <p class='post-user'><%= post.user.first_name+' '+post.user.last_name %></p>
+                    <% end %>
+                    <p class='post-date'><%= post.created_at.strftime('%D at %R') %></p>
+                </div>
+            </div>
+            <%= link_to post_path(post), class: 'link-post' do %>
+                <p class='post-body'><%= post.body %></p>
             <% end %>
-        <% else %>
-            <%= render partial:'shared_post', locals: {'post': Post.find(post.shared_post)}%>
-        <% end %>
-    <% end %>
+            <% if post.shared_post.nil? %>
+                <% if post.image.attached? %>
+                    <%= image_tag(post.image, class: 'post-pic') %>
+                <% end %>
+            <% else %>
+                <%= render partial:'posts/shared_post', locals: {'post': Post.find(post.shared_post)}%>
+            <% end %>
     <div class="post-lower">
         <div class="post-info">
             <span class="icon-text is-small is-centered has-text-link" id='reactions' data-controller='likes'>
@@ -44,19 +47,7 @@
                 <button popovertarget='share-post-<%= post.id%>'><i class="fas fa-share is-medium"></i></button>
                     <div popover id='share-post-<%= post.id%>'>
                         <p id='sharing-title'>Sharing post</p>
-                        <div id='sharing-form'>
-                            <div id="user-pic">
-                                <%= image_tag(current_user.profile_picture, class: 'profile-pic') %>
-                            </div>
-                        <%= form_with url: posts_path, method: :post do |f| %>
-                        <%= f.hidden_field :user_id, :value => current_user.id %>
-                        <%= f.hidden_field :shared_post, :value => post.id %>
-                        <div id="new-post-fields">
-                            <%= f.text_field :body, placeholder: "Write something", id: 'text-field'%>
-                        </div>
-                        <%= f.submit 'Share', class:'button is-link is-small'%>
-                        <% end %>
-                        </div>
+                         <%= turbo_frame_tag id='new-post-frame', src: new_post_path(post_type: 'shared', post: post.id)%>
                     </div>
             </span>
         </div>

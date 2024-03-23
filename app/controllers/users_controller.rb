@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+    include UsersHelper
+    include FriendRequestsHelper
 
     def new
         @user = User.new()
@@ -7,19 +9,46 @@ class UsersController < ApplicationController
     def create
         @user = User.new(user_params)
         if @user.save
-            p 'user created'
         else
             p 'error creating'
         end
     end
 
     def show
-        redirect_to root_path
+        @countries = JSON.load(File.open('countries'))
+        @user = User.find(params[:id])
+        @friends = @user.friends.map {|friend| friend.friend_id}
+        @photos = @user.posts.joins(:image_attachment)
+        @friendship = friendship_status(@user, current_user)
+        @posts = @user.posts.paginate(page: 1, per_page: 10).order(created_at: :desc)
+        respond_to do |format|
+            format.turbo_stream do
+                @posts = @posts.page(params[:page])
+                render turbo_stream: turbo_stream.append("posts", partial: "posts/post", collection: @posts,
+                    locals: {location: 'feed'})
+            end
+            format.html
+        end
+        
+    end
+
+    def update
+        @user = User.find(params[:id])
+        if @user.update(update_params)
+            redirect_to user_path(@user)
+        else
+            render @user, status: :unprocessable_entity
+        end
     end
 
     private
 
     def user_params
-        params.permit(first_name, last_name, email, encrypted_password, bio, location, profile_picture)
+        params.permit(first_name, last_name, email, encrypted_password, bio, location, profile_picture, cover_picture)
+    end
+
+    def update_params
+        params.require(:user).permit(:cover_picture, :profile_picture, :bio, :location, :current_password)
     end
 end
+
