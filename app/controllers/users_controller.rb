@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
     include UsersHelper
     include FriendRequestsHelper
+    include PostsHelper
+    before_action :resize, only: [:update]
 
     def new
         @user = User.new()
@@ -18,7 +20,7 @@ class UsersController < ApplicationController
         @countries = JSON.load(File.open('countries'))
         @user = User.find(params[:id])
         @friends = @user.friends.map {|friend| friend.friend_id}
-        @photos = @user.posts.joins(:image_attachment)
+        @photos = @user.posts.joins(:image_attachment).order('created_at DESC').take(6)
         @friendship = friendship_status(@user, current_user)
         @posts = @user.posts.paginate(page: 1, per_page: 10).order(created_at: :desc)
         respond_to do |format|
@@ -49,6 +51,25 @@ class UsersController < ApplicationController
 
     def update_params
         params.require(:user).permit(:cover_picture, :profile_picture, :bio, :location, :current_password)
+    end
+
+    def resize
+        if params[:user][:profile_picture].present?
+            tempo = resize_before_save(params[:user][:profile_picture], 120, 120)
+            params[:user][:profile_picture] = ActionDispatch::Http::UploadedFile.new(
+                tempfile: tempo,
+                filename: tempo.path,
+                type: 'image/jpeg'
+            )
+        end
+        if params[:user][:cover_picture].present?
+            tempo = resize_before_save(params[:user][:cover_picture], 1100, nil)
+            params[:user][:cover_picture] = ActionDispatch::Http::UploadedFile.new(
+                tempfile: tempo,
+                filename: tempo.path,
+                type: 'image/jpeg'
+            )
+        end
     end
 end
 

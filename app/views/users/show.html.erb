@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class='button is-small unfocused' data-editprofile-target='editButton' data-action='click->editprofile#edit'>Edit Profile</div>
-        <button class='edit-form' data-editprofile-target='cancel' data-action='click->editprofile#cancel'>Cancel</button>
+        <div class='edit-form' data-editprofile-target='cancel' data-action='click->editprofile#cancel'>Cancel</div>
         <%= f.submit 'Save changes', class:'hidden', data: {'editprofile-target': 'submit'}%>
     </div>
 <% end %>

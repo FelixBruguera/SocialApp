@@ -16,12 +16,11 @@
             </div>
             <%= link_to post_path(post), class: 'link-post' do %>
                 <p class='post-body'><%= post.body %></p>
-            <% end %>
-            <% if post.shared_post.nil? %>
                 <% if post.image.attached? %>
                     <%= image_tag(post.image, class: 'post-pic') %>
                 <% end %>
-            <% else %>
+            <% end %>
+            <% unless post.shared_post.nil? %>
                 <%= render partial:'posts/shared_post', locals: {'post': Post.find(post.shared_post)}%>
             <% end %>
     <div class="post-lower">

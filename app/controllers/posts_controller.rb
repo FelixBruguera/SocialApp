@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
     include FriendRequestsHelper
+    include PostsHelper
+    before_action :resize, only: [:create]
 
     def index
         @countries = JSON.load(File.open('countries'))
@@ -43,9 +45,30 @@ class PostsController < ApplicationController
         end
     end
 
+    def update
+        @post = Post.find(params[:id])
+        if @post.update(update_params)
+        else
+            render @post, status: :unprocessable_entity
+        end
+    end
+
     private
+
+    def resize
+        tempo = resize_before_save(params[:post][:image], 810, 500)
+        params[:post][:image] = ActionDispatch::Http::UploadedFile.new(
+            tempfile: tempo,
+            filename: tempo.path,
+            type: 'image/jpeg'
+          )
+    end
     
     def post_params
         params.require(:post).permit(:body, :user_id, :image, :shared_post)
+    end
+
+    def update_params
+        params.require(:post).permit(:image)
     end
 end

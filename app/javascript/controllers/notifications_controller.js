@@ -8,4 +8,7 @@ export default class extends Controller {
     this.countTarget.textContent = ''
     this.countTarget.className = 'hidden'
   }
+  readList() {
+    for(const tgt of this.notisTargets) {tgt.className = 'noti-seen-list'}
+  }
 }

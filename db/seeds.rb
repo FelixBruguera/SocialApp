@@ -12,5 +12,32 @@
 # Friend.create(user_id: User.first.id, friend_id: User.last.id)
 # Post.create(body:'testing posts', user_id:6)
 # Post.create(body:'another testing posts', user_id:6)
-nopfp = User.all.select {|user| user.profile_picture.attached? == false}
-nopfp.each {|user| user.update(profile_picture: File.open('app/assets/images/pfp.jpg'))}
+include PostsHelper
+#nopfp = User.all.select {|user| user.profile_picture.attached? == false}
+#nopfp.each {|user| user.update(profile_picture: File.open('app/assets/images/pfp.jpg'))}
+# tempo = Tempfile.new(ActiveStorage::Blob.service.path_for(Post.joins(:image_attachment).first.image.key))
+# tempo = Tempfile.new(Rails.application.routes.url_helpers.rails_blob_path(tempo, only_path: true))
+# filepath = Rails.application.routes.url_helpers.rails_blob_path(tempo, host: 'localhost:3000')
+# p filepath
+# p File.open(filepath.to_s)
+User.all.each do |pic| 
+    tempo = pic.cover_picture
+    tempo.blob.open do |f|
+    begin
+        img = ActionDispatch::Http::UploadedFile.new(
+            tempfile: f,
+            filename: f.to_s,
+            type: 'image/jpeg'
+        )
+        new_file = resize_before_save(img, 1100, 180)
+        resized = ActionDispatch::Http::UploadedFile.new(
+            tempfile: new_file,
+            filename: new_file.to_s,
+            type: 'image/jpeg'
+        )
+        User.find(pic.id).update(cover_picture: resized)
+    end
+    rescue
+        p 'error'
+    end
+end
