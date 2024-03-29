@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="friend-requests"
 export default class extends Controller {
-  static targets = ['button', 'frequest', 'count']
+  static targets = ['button', 'frequest', 'count', 'hid', 'show']
   change() {
     this.buttonTarget.classList.remove('unfocused')
     this.buttonTarget.classList.add('request-sent')
@@ -15,5 +15,9 @@ export default class extends Controller {
   }
   clear() {
     this.countTarget.className = 'hidden'
+  }
+  ignored() {
+    this.hidTarget.className = 'list-request-item'
+    this.showTarget.className = 'hidden'
   }
 }

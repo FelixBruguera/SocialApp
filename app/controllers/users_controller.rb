@@ -4,6 +4,10 @@ class UsersController < ApplicationController
     include PostsHelper
     before_action :resize, only: [:update]
 
+    def index
+        @users = User.all
+    end
+
     def new
         @user = User.new()
     end

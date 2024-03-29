@@ -56,12 +56,14 @@ class PostsController < ApplicationController
     private
 
     def resize
-        tempo = resize_before_save(params[:post][:image], 810, 500)
-        params[:post][:image] = ActionDispatch::Http::UploadedFile.new(
-            tempfile: tempo,
-            filename: tempo.path,
-            type: 'image/jpeg'
-          )
+        if params[:post][:image].present?
+            tempo = resize_before_save(params[:post][:image], 810, 500)
+            params[:post][:image] = ActionDispatch::Http::UploadedFile.new(
+                tempfile: tempo,
+                filename: tempo.path,
+                type: 'image/jpeg'
+            )
+        end
     end
     
     def post_params

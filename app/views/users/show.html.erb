@@ -78,7 +78,7 @@
                     <div popover id='confirmation'>
                         <div id="confirmation-box">
                             <p id='confirmation-title'>Are you sure?</p>
-                            <p id='confirmation-text'>Click outside to cancel</p>
+                            <p id='confirmation-text'>Press ESC to cancel</p>
                             <%= link_to 'Unfriend', friend_path(user_id: current_user.id, friend_id: @user), data: {turbo_method: :delete}, class:'button is-small is-danger'%>
                         </div>
                     </div>
@@ -102,14 +102,16 @@
                 </div>
         </div>
         <div id='profile-user-photos'>
-            <p class='profile-title'>Pictures</p>
-            <div id='photo-box'>
-                <% @photos.each do |photo|%>
-                    <%= link_to post_path(photo) do %>
-                        <%= image_tag(photo.image, class: 'photo') %>
+            <% if is_friend?(@user, current_user) || @user == current_user %>
+                <p class='profile-title'>Pictures</p>
+                <div id='photo-box'>
+                    <% @photos.each do |photo|%>
+                        <%= link_to post_path(photo) do %>
+                            <%= image_tag(photo.image, class: 'photo') %>
+                        <% end %>
                     <% end %>
-                <% end %>
-            </div>
+                </div>
+            <% end %>
         </div>
     </div>
     <div id="profile-content">

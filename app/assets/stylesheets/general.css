@@ -862,3 +862,48 @@ input.edit-form, div.edit-form, .edit-form {
 .noti-list:hover {
     background-color: rgba(0,0,255,0.3);
 }
+#user-index {
+    padding-top: 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.user-card {
+    width: 50%;
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.index-profile-pic {    
+    height: 80px;
+    width: 80px;
+    border-radius: 100px;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin-left: 5vw;
+}
+.index-user-info {
+    display: flex;
+    width: 60%;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 20px;
+}
+.requests-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    padding-top: 5%;
+    height: 100vh;
+}
+.list-request-item {
+    padding: 10px;
+    border-radius: 15px;
+    width: 50%;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.friendrequest-index {
+    display: grid;
+    grid-template: 1fr / 2fr 2fr 2fr;
+    align-items: center;
+}

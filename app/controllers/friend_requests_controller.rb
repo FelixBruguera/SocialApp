@@ -1,5 +1,10 @@
 class FriendRequestsController < ApplicationController
 
+    def index
+        user = User.find(current_user.id)
+        @requests = user.friend_requests.order('created_at DESC')
+    end
+
     def new
         @friend_request = FriendRequest.new
     end
