@@ -1,41 +1,35 @@
 <head>
       <% stylesheet_link_tag 'general'%>
+      <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
-<%= turbo_frame_tag :signup do %>
-  <p id='form-title'>Sign Up</p>
+<%= turbo_frame_tag id='signup' do %>
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
     <div id='form-names'>
     <div class="field">
-      <%= f.label :first_name %><br />
-      <%= f.text_field :first_name, autofocus: true%>
+      <%= f.text_field :first_name, placeholder: 'First name' %>
     </div>
 
     <div class="field">
-      <%= f.label :last_name %><br />
-      <%= f.text_field :last_name, autofocus: true %>
+      <%= f.text_field :last_name, placeholder: 'Last name'  %>
     </div>
     </div>
 
     <div id="form-names">
       <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <%= f.email_field :email, placeholder: 'Email' , autocomplete: "email" %>
       </div>
       <div class="field">
-        <%= f.label :birthday, 'Birthday'%><br />
-        <%= f.date_field :birthday, autofocus: true %>
+        <%= f.text_field :birthday, onfocus: 'this.type="date"', placeholder: 'Birthday'%>
       </div>
     </div>
 
     <div id="form-names">
       <div class="field">
-        <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "new-password" %>
+        <%= f.password_field :password, placeholder: 'Password', autocomplete: "new-password" %>
       </div>
       <div class="field">
-        <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+        <%= f.password_field :password_confirmation, placeholder: 'Password confirmation' , autocomplete: "new-password" %>
       </div>
     </div>
 

@@ -11,7 +11,7 @@ body {
     background-color: whitesmoke;
 }
 .hero-container {
-    background-color: var(--bg);
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -40,28 +40,28 @@ body {
     height: 100vh;
     z-index: 1;
     display: grid;
-    grid-template: 5fr 1fr/ 1fr;
+    grid-template: 5fr 1fr/ 1fr 1fr;
     font-size: 1.2rem;
     align-items: center;
 }
 #landing-left {
-    display: none;
     color: var(--bg);
     font-weight: 800;
     z-index: 1;
     grid-area: 1 / 1 / 2 / 1;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: fit-content;
-    padding: 10px;
+    font-size: 5rem;
 }
 #landing-right {
     font-weight: 800;
-    background-color: rgba(0,0,0,0.3);
-    font-size: 2rem;
+    font-size: 1rem;
     z-index: 1;
-    grid-area: 1 / 1;
+    grid-area: 1 / 2 / 2 / 2;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 turbo-frame > a {
     color: azure;
@@ -91,6 +91,7 @@ turbo-frame > a {
     background-color: rgba(0,0,0,0.5);
     width: fit-content;
     padding: 5px;
+    font-size: 1rem;
 }
 .credits > a {
     color: lightgray;
@@ -118,7 +119,18 @@ turbo-frame > a {
     text-align: center;
 }
 .field > input {
-    width: 200px;
+    min-height: 30px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-color: rgba(31.8,28.6,34.5, 0.7);
+    padding: 10px;
+    color: ivory;
+}
+.field {
+    display: flex;
+    min-width: 300px;
+    justify-content: space-evenly;
+    align-items: center;
 }
 #hero-icons {
     display: flex;
@@ -134,7 +146,7 @@ turbo-frame > a {
     display: flex;
     /* grid-template: 1fr 6fr/ 1fr 3fr 1fr; */
     flex-direction: column;
-    background-color: white;
+    background-color: var(--bg);
     height: 100%;
     padding-top: 5%;
     gap: 30px;
@@ -152,7 +164,6 @@ turbo-frame > a {
     flex-direction: column;
     height: fit-content;
     gap: 30px;
-    border: 1px solid rgba(0,0,0,0.3);
     width: 100%;
     padding: 20px;
     align-items: baseline;
@@ -168,7 +179,7 @@ turbo-frame > a {
     flex-direction: column;
     height: fit-content;
     gap: 30px;
-    border: 1px solid rgba(0,0,0,0.3);
+    border: 1px solid rgba(0,0,0,0.15);
     width: 500px;
     padding: 20px;
     align-items: baseline;
@@ -235,6 +246,11 @@ turbo-frame > a {
     justify-content: center;
     align-items: center;
     gap: 20px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 5px;
+    width: 37vw;
 }
 #new-post > form {
     display: flex;
@@ -690,8 +706,9 @@ div[id*='share-post-']::backdrop {
     text-align: center;
 }
 svg {
-    width: 2.5%;
-    display: none;
+    width: 20px;
+    height: fit-content;
+    fill: ivory;
 }
 #location {
     fill: var(--logo);
@@ -715,6 +732,7 @@ svg {
     display: flex;
     flex-direction: column;
     width: 100%;
+    align-items: center;
 }
 .hidden {
     display: none;
@@ -780,21 +798,29 @@ svg {
     color: grey;
     font-size: 0.9rem;
 }
-.load-posts {
-    background-color: rgba(72, 95, 199,0.6);
+.load-posts, .load-posts-profile {
     margin-top: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 30px;
-    border-radius: 5px;
+    width: 100%;
 }
-.load-posts:hover {
+.load-posts > a:hover, .load-posts-profile > a:hover {
     background-color: rgba(72, 95, 199,0.8);
 }
-.load-posts > a {
+.load-posts > a, .load-posts-profile > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: 800;
     color: var(--bg);
+    background-color: rgba(72, 95, 199,0.6);
+    height: 30px;
+    border-radius: 5px;
+    width: 100%;
+}
+.load-posts-profile > a {
+    width: 60%;
 }
 .no-posts {
     background-color: lightgrey;
@@ -906,4 +932,30 @@ input.edit-form, div.edit-form, .edit-form {
     display: grid;
     grid-template: 1fr / 2fr 2fr 2fr;
     align-items: center;
+}
+#landing-button {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    color: azure;
+    font-size: 0.8rem;
+}
+#landing-button:hover {
+    text-decoration: none;
+    font-weight: 600;
+}
+#landing-options {
+    padding-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+#landing-login {
+    min-width: 60%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    color: ivory;
+    background-color: rgba(31.8,28.6,34.5, 0.7);
+    font-size: 1rem;
+}
+#landing-login:hover {
+    font-weight: 600;
+    background-color: var(--links)
 }

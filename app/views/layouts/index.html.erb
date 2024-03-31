@@ -1,44 +1,30 @@
-    <%= render partial:'layouts/hero', locals: {status: 'login'} %>
     <head>
-        <script href='application.js' defer></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
         <% stylesheet_link_tag 'general'%>
     </head>
     <body>
-        <%= image_tag('bg1.jpg', class: 'bg-1 background-img') %>
-        <%= image_tag('bg2.jpg', class: 'bg-2') %>
-        <%= image_tag('bg3.jpg', class: 'bg-3') %>
+        <%= image_tag('bg8.jpg', class: 'background-img') %>
         <div id='landing'>
             <div id='landing-left'>
-                <p>SocialApp helps you connect and share with the people you love</p>
+                <p>SocialApp</p>
             </div>
             <div class='credits-1 credits'>
                 <span class="icon is-left has-text-light">
                     <i class="fas fa-camera"></i>
                 </span>
-                <a href="https://unsplash.com/@ryoji__iwata">Ryoji Iwata</a>
+                <a href="https://unsplash.com/@mohamadaz" target='_blank' >Mohammad Alizade</a>
             </div>
-            <div class='credits-2'>
-                <span class="icon is-left has-text-light">
-                    <i class="fas fa-camera"></i>
-                </span>
-                <a href="https://unsplash.com/@alex_rainer">Alex Rainer</a>
-            </div>
-            <div class='credits-3'>
-                <span class="icon is-left has-text-light">
-                    <i class="fas fa-camera"></i>
-                </span>
-                <a href="https://unsplash.com/@jubilation">Isaac N.</a>
-            </div>
-            <%# <div class='credits-4'>
-                <span class="icon is-left has-text-light">
-                    <i class="fas fa-camera"></i>
-                </span>
-                <a href="https://unsplash.com/@mariopurisic">Mario Purisic</a>
-            </div> %>
-            <div id='landing-right'>
-                <%= turbo_frame_tag :signup do %>
-                    <%= link_to 'Sign Up', new_user_registration_path, id: 'sign-up-link' %>
-                <% end %>
+            <div id='landing-right' data-controller='landing'>
+                <%= turbo_frame_tag id='login', src: new_user_session_path, data: {'landing-target': 'login'}%>
+                <div id="landing-options">
+                    <span class="icon is-medium is-left"></span>
+                    <%= turbo_frame_tag id='signup' do %>
+                    <%= link_to new_user_registration_path, id: 'sign-up-link' do %>
+                        <button class='button is-medium unfocused is-ghost' id='landing-button' data-action='landing#signup'>Sign up</button>
+                    <% end %>
+                    <% end %>
+                        <button class='button is-medium unfocused is-ghost' id='landing-button' data-landing-target='guest'>Login as Guest</button>
+                </div>
             </div>
         </div>
     </body>

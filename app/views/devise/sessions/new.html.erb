@@ -1,31 +1,26 @@
 <h2 class='title is-3'>Log in</h2>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-  <div class="control has-icons-left">
-    <span class="icon is-small is-left">
-      <i class="fas fa-user"></i>
-    </span>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'you@email.com' %>
-      </div>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password", placeholder: '******' %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
+<%= turbo_frame_tag id='login' do %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {turbo: false}) do |f| %>
     <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <span class="icon is-medium is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'you@email.com' %>
     </div>
-  <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
+    <div class="field">
+      <span class="icon is-medium is-left">
+        <i class="fas fa-lock"></i>
+      </span>
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: '******' %>
+    </div>
+
+    <div class="field">     
+      <span class="icon is-small is-left"></span>
+      <%= f.submit "Log in", class: 'button is-medium', id: 'landing-login' %>
+      </div>
+  <% end %>
 <% end %>
 
 <%= render "devise/shared/links" %>

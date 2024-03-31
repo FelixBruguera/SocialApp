@@ -4,9 +4,7 @@
 </head>
 <%= render partial:'layouts/hero', locals: {'status': 'feed'}%>
 <div id='feed'>
-        <div id='new-post'>
             <%= turbo_frame_tag id='new-post-frame', src: new_post_path(post_type: 'new')%>
-        </div>
 <div id='content'>
     <div id='links'>
         <div id="link-icon">
@@ -28,10 +26,12 @@
                 <%= render partial:'post', locals: {post: post, location: 'feed'}%>
             <% end %>
         </div>
+        <% unless @feed.next_page.nil? %>
         <div class='load-posts' data-controller='pagination'>
             <span class='hidden' data-pagination-target='maxPages'><%= @feed.total_pages %></span>
             <%= link_to 'Load more', "/load_posts?page=1", remote: true, data: {turbo_method: :post, 'pagination-target': :link, action: 'click->pagination#update'}%>
         </div>
+        <% end %>
     </div>
     <div id='people'>
     <% unless @people.empty? %>
