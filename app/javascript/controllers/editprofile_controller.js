@@ -2,7 +2,8 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="editprofile"
 export default class extends Controller {
-  static targets = ['editButton', 'submit', 'cancel', 'cover', 'profile', 'location', 'currentLocation']
+  static targets = ['editButton', 'submit', 'cancel', 'cover', 'profile', 'location', 'currentLocation', 'form', 'bio',
+                    'seeMore', 'button', 'title']
   edit() {
     this.submitTarget.className = 'button is-small is-link'
     this.cancelTarget.className = 'editing button is-small is-danger'
@@ -20,5 +21,12 @@ export default class extends Controller {
     this.locationTarget.className = 'hidden'
     this.editButtonTarget.className = 'button is-small unfocused'
     this.currentLocationTarget.id = 'profile-location'
+  }
+  editBio() {
+    this.formTarget.className = 'editBio-form'
+    this.bioTarget.className = 'hidden'
+    this.seeMoreTarget.className = 'hidden'
+    this.buttonTarget.id = 'hidden'
+    this.titleTarget.className = 'hidden'
   }
 }

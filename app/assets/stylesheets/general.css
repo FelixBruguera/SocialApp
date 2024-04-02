@@ -959,3 +959,13 @@ input.edit-form, div.edit-form, .edit-form {
     font-weight: 600;
     background-color: var(--links)
 }
+#edit-bio {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+}
+.bio-text {
+    height: 100px;
+    width: 80%;
+}
