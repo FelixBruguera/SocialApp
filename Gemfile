@@ -75,3 +75,5 @@ gem 'image_processing', '~> 1.2'
 
 gem 'will_paginate', '~> 4.0'
 
+gem 'friendly_id', '~> 5.5.0'
+

@@ -9,7 +9,7 @@
             <%= image_tag(current_user.profile_picture, class: 'profile-pic') %>
         </div>
         <%= form_with model: @post, method: :post do |f| %>
-            <%= f.hidden_field :user_id, :value => current_user.id %>
+            <%= f.hidden_field :user_id, :value => current_user.slug %>
             <% if post_type == 'shared'%>
                 <%= f.hidden_field :shared_post, :value => params[:post] %>
             <% end %>

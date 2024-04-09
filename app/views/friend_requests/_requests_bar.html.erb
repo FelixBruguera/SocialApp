@@ -16,10 +16,10 @@
                                 <% end %>
                             </p>
                             <div id='friend-request-options'>
-                                <%= link_to friends_path(user_id: user.id, friend_id: sender.id), data: {turbo_method: :post}, remote: true do %>
+                                <%= link_to friends_path(user_id: user.uuid, friend_id: sender.uuid), data: {turbo_method: :post}, remote: true do %>
                                     <button class='button is-success is-light is-small' data-action='click->friendrequests#destroy'>Accept</button>
                                 <% end %>
-                                <%= link_to friend_request_path(req, friend_request: {ignored: true}), data: {turbo_method: :put}, remote: true do %>
+                                <%= link_to friend_request_path(req.slug, friend_request: {ignored: true}), data: {turbo_method: :put}, remote: true do %>
                                     <button class='button is-danger is-light is-small' data-action='click->friendrequests#destroy'>Ignore</button>
                                 <% end %>
                             </div>

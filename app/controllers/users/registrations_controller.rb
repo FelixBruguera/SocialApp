@@ -44,7 +44,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :birthday, :email, :password, :password_confirmation, :cover_picture, :profile_picture])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :birthday, :email, :password, :password_confirmation, :cover_picture, :profile_picture, :uuid, :username])
   end
 
   #If you have extra params to permit, append them to the sanitizer.
@@ -52,9 +52,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:account_update, keys: [:cover_picture, :profile_picture, :current_password])
   end
 
+  def create_username(params)
+    username = "#{params[:user][:first_name]}-#{params[:user][:last_name]}-#{Random.rand(1000..9999)}"
+    if User.all.any? {|u| u.username == username}
+      create_username(params)
+    else
+      username
+    end
+  end
+
   def set_defaults
     params[:user][:profile_picture] = File.open('app/assets/images/pfp.jpg')
     params[:user][:cover_picture] =  File.open('app/assets/images/cover_default.jpg')
+    params[:user][:uuid] = SecureRandom.uuid
+    params[:user][:username] =  create_username(params)
   end
 
   # The path used after sign up.

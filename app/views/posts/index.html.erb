@@ -38,11 +38,11 @@
             <p id='people-title'>People you might know</p>
             <% @people.each do |p|%>
                 <div id="user-pic">
-                    <%= link_to user_path(p.id) do %>
+                    <%= link_to user_path(p.slug) do %>
                         <%= image_tag(p.profile_picture, class: 'profile-pic') %>
                         <div id="user-date" data-controller='friendrequests'>
                             <p id='post-user'><%= p.first_name+' '+p.last_name %></p>
-                            <%= link_to friend_requests_path(sender: current_user.id, receiver: p.id), data: {turbo_method: :post} do %>
+                            <%= link_to friend_requests_path(sender: current_user.slug, receiver: p.slug), data: {turbo_method: :post} do %>
                                 <button class='button is-small unfocused' data-friendrequests-target='button' data-action='click->friendrequests#change'>Add Friend</button>
                             <% end %>
                     <% end %>

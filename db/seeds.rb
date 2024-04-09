@@ -20,24 +20,25 @@ include PostsHelper
 # filepath = Rails.application.routes.url_helpers.rails_blob_path(tempo, host: 'localhost:3000')
 # p filepath
 # p File.open(filepath.to_s)
-User.all.each do |pic| 
-    tempo = pic.cover_picture
-    tempo.blob.open do |f|
-    begin
-        img = ActionDispatch::Http::UploadedFile.new(
-            tempfile: f,
-            filename: f.to_s,
-            type: 'image/jpeg'
-        )
-        new_file = resize_before_save(img, 1100, 180)
-        resized = ActionDispatch::Http::UploadedFile.new(
-            tempfile: new_file,
-            filename: new_file.to_s,
-            type: 'image/jpeg'
-        )
-        User.find(pic.id).update(cover_picture: resized)
-    end
-    rescue
-        p 'error'
-    end
-end
+# User.all.each do |pic| 
+#     tempo = pic.cover_picture
+#     tempo.blob.open do |f|
+#     begin
+#         img = ActionDispatch::Http::UploadedFile.new(
+#             tempfile: f,
+#             filename: f.to_s,
+#             type: 'image/jpeg'
+#         )
+#         new_file = resize_before_save(img, 1100, 180)
+#         resized = ActionDispatch::Http::UploadedFile.new(
+#             tempfile: new_file,
+#             filename: new_file.to_s,
+#             type: 'image/jpeg'
+#         )
+#         User.find(pic.id).update(cover_picture: resized)
+#     end
+#     rescue
+#         p 'error'
+#     end
+# end
+# Friend.all.each {|fr| Chat.create(user_id: fr.user_id, friend_id: fr.friend_id) unless Chat.where(user_id: fr.user_id, friend_id: fr.friend_id).or(Chat.where(user_id: fr.friend_id, friend_id: fr.user.id)).exists?}

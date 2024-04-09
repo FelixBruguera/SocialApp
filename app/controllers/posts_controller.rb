@@ -27,26 +27,28 @@ class PostsController < ApplicationController
 
     def create
         @post = Post.new(post_params)
-        if @post.save
-            unless @post.shared_post.nil?
-                poster = Post.find(@post.shared_post).user
-                unless poster == @post.user
-                    Notification.create(sender:@post.user, receiver: poster, post_id: @post.shared_post, action: 'shared')
+        if @post.user == current_user
+            if @post.save
+                unless @post.shared_post.nil?
+                    poster = Post.friendly.find(@post.shared_post).user
+                    unless poster == @post.user
+                        Notification.create(sender:@post.user, receiver: poster, post_id: @post.shared_post, action: 'shared')
+                    end
                 end
-            end
-            respond_to do |format|
-                format.turbo_stream do
-                    render turbo_stream: turbo_stream.prepend("posts", partial: "posts/post",
-                        locals: { post: @post, location: 'feed' })
+                respond_to do |format|
+                    format.turbo_stream do
+                        render turbo_stream: turbo_stream.prepend("posts", partial: "posts/post",
+                            locals: { post: @post, location: 'feed' })
+                    end
                 end
+            else
+                render root_path, status: :unprocessable_entity
             end
-        else
-            render root_path, status: :unprocessable_entity
         end
     end
 
     def update
-        @post = Post.find(params[:id])
+        @post = Post.friendly.find(params[:id])
         if @post.update(update_params)
         else
             render @post, status: :unprocessable_entity
@@ -67,7 +69,9 @@ class PostsController < ApplicationController
     end
     
     def post_params
-        params.require(:post).permit(:body, :user_id, :image, :shared_post)
+        params.require(:post).permit(:body, :user_id, :image, :shared_post, :uuid)
+        {user_id: get_id(params[:post][:user_id]), body: params[:post][:body], image: params[:post][:image],
+        shared_post: post_id(params[:post][:shared_post]), uuid: SecureRandom.uuid }
     end
 
     def update_params

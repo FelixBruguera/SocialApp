@@ -1,11 +1,6 @@
 <head>
     <% stylesheet_link_tag 'general'%>
 </head>
-<style>
-    body {
-        background-color
-    }
-</style>
 <%= render partial:'layouts/hero', locals: {'status': 'feed'}%>
 <% if @user == current_user %>
     <%= form_with model: @user, data: {controller: 'editprofile', turbo: false}, id:'profile-pictures', method: :patch do |f| %>
@@ -77,11 +72,11 @@
                         <div id="confirmation-box">
                             <p id='confirmation-title'>Are you sure?</p>
                             <p id='confirmation-text'>Press ESC to cancel</p>
-                            <%= link_to 'Unfriend', friend_path(user_id: current_user.id, friend_id: @user), data: {turbo_method: :delete}, class:'button is-small is-danger'%>
+                            <%= link_to 'Unfriend', friend_path(find_friendship(current_user.slug, @user.slug), friend_id: @user.slug), data: {turbo_method: :delete}, class:'button is-small is-danger'%>
                         </div>
                     </div>
             <% elsif @friendship == 'noFriends' %>
-                <%= link_to friend_requests_path(sender: current_user.id, receiver: @user), data: {turbo_method: :post, controller: 'friendrequests'} do %>
+                <%= link_to friend_requests_path(sender: current_user.slug, receiver: @user.slug), data: {turbo_method: :post, controller: 'friendrequests'} do %>
                     <button class='button is-small unfocused' data-friendrequests-target='button' data-action='click->friendrequests#change'>Add Friend</button>
                 <% end %>
             <% else %>
@@ -135,7 +130,7 @@
             <% unless @posts.next_page.nil? %>
             <div class='load-posts-profile' data-controller='pagination'>
                 <span class='hidden' data-pagination-target='maxPages'><%= @posts.total_pages %></span>
-                <%= link_to 'Load more', "/users/#{@user.id}?page=1", remote: true, data: {turbo_method: :post, 'pagination-target': :link, action: 'click->pagination#update'}%>
+                <%= link_to 'Load more', "/users/#{@user.slug}?page=1", remote: true, data: {turbo_method: :post, 'pagination-target': :link, action: 'click->pagination#update'}%>
             </div>
             <% end %>
         </div>

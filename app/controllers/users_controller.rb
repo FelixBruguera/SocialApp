@@ -2,6 +2,8 @@ class UsersController < ApplicationController
     include UsersHelper
     include FriendRequestsHelper
     include PostsHelper
+    include FriendsHelper
+
     before_action :resize, only: [:update]
 
     def index
@@ -9,7 +11,7 @@ class UsersController < ApplicationController
     end
 
     def new
-        @user = User.new()
+        @user = User.new
     end
 
     def create
@@ -22,7 +24,7 @@ class UsersController < ApplicationController
 
     def show
         @countries = JSON.load(File.open('countries'))
-        @user = User.find(params[:id])
+        @user = User.friendly.find(params[:username])
         @friends = @user.friends.map {|friend| friend.friend_id}
         @photos = @user.posts.joins(:image_attachment).order('created_at DESC').take(6)
         @friendship = friendship_status(@user, current_user)
@@ -39,18 +41,20 @@ class UsersController < ApplicationController
     end
 
     def update
-        @user = User.find(params[:id])
-        if @user.update(update_params)
-            redirect_to user_path(@user)
-        else
-            render @user, status: :unprocessable_entity
+        @user = User.friendly.find(params[:id])
+        if @user == current_user
+            if @user.update(update_params)
+                redirect_to user_path(@user)
+            else
+                render @user, status: :unprocessable_entity
+            end
         end
     end
 
     private
 
     def user_params
-        params.permit(first_name, last_name, email, encrypted_password, bio, location, profile_picture, cover_picture)
+        params.permit(first_name, last_name, email, encrypted_password, bio, location, profile_picture, cover_picture, uuid, username)
     end
 
     def update_params

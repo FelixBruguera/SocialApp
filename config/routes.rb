@@ -12,12 +12,16 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "application#index"
   resources :friends
-  resources :users
+  #get '/friends?:user_id, :friend_id', to: 'friends#destroy'
+  resources :users, except: [:show]
+  get 'users/:username', to: 'users#show'
   resources :posts
   resources :reactions
   resources :comments
   resources :notifications
   resources :friend_requests
+  resources :messages
+  resources :chats
   post 'update_notifications', to: 'notifications#update_notifications'
   post 'load_posts(:page)', to: 'posts#index'
   post 'users/:id(:page)', to: 'users#show'

@@ -6,4 +6,13 @@ module UsersHelper
     def country_code(name)
         @countries.key(name).upcase
     end
+
+    def get_id(query)
+        user = User.find_by(username: query)
+        if user
+            user.id
+        else
+            user = User.find_by(uuid: query).id
+        end
+    end
 end

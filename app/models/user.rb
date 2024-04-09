@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  extend FriendlyId
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -13,4 +14,5 @@ class User < ApplicationRecord
   has_many :sent_notifications, class_name: 'Notification', foreign_key: 'sender'
   has_many :notifications, class_name: 'Notification', foreign_key: 'receiver'
   has_one_attached :cover_picture
+  friendly_id :username, use: :slugged
 end

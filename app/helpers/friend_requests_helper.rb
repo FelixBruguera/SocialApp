@@ -1,6 +1,10 @@
 module FriendRequestsHelper
     include UsersHelper
 
+    def request_id(id)
+        FriendRequest.friendly.find(id).id
+    end
+
     def find_request(user_id, friend_id)
         @request = FriendRequest.where(sender: user_id, receiver: friend_id).first
         if @request.nil?

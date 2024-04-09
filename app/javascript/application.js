@@ -53,3 +53,4 @@ import "controllers"
 //         notiCount.className = 'noti-count-zero'
 //     }
 // })
+import "channels"

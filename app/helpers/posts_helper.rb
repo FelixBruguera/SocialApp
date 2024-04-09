@@ -7,5 +7,9 @@ module PostsHelper
         .source(image_param)
         .resize_to_fit(width, height)
         .call
-      end
+    end
+
+    def post_id(query)
+      Post.find_by(slug: query).id
+    end
 end

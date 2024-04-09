@@ -23,5 +23,6 @@ class NotificationsController < ApplicationController
 
     def notification_params
         params.permit(:sender, :receiver, :post_id, :is_friend_request, :type, :seen)
+        {sender: }
     end
 end
