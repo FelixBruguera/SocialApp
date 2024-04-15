@@ -552,6 +552,19 @@ div[id*='share-post-']::backdrop {
     font-size: 13px;
     text-align: center;
 }
+.chats-count {
+    color: white;
+    height: 15px;
+    width: 15px;
+    background-color: red;
+    position: absolute;
+    margin-left: 1%;
+    border-radius: 10px;
+    top: 20%;
+    font-weight: 800;
+    font-size: 11px;
+    text-align: center;
+}
 .requests-count {
     color: white;
     height: 10px;
@@ -1000,6 +1013,7 @@ input.edit-form, div.edit-form, .edit-form {
     color: whitesmoke;
     padding: 5px 10px;
     border-radius: 10px;
+    max-width: 75%;
 }
 .chat-message {
     /* background-color: #006AFF; */
@@ -1057,4 +1071,57 @@ input.edit-form, div.edit-form, .edit-form {
 }
 .chat-box:hover {
     background-color: #e5e5e5;
+}
+.last {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.user-div {
+    font-size: 0.9rem;
+    width: 100%;
+}
+.messages-count {
+    color: white;
+    height: 15px;
+    width: 15px;
+    background-color: red;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 11px;
+    text-align: center;
+}
+#welcome-index {
+    height: 100vh;
+    padding: 150px;
+    text-align: center;
+}
+#welcome-text {
+    font-weight: 800;
+    font-size: 2rem;
+    margin-bottom: 50px;
+}
+#welcome-links {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-evenly;
+}
+.welcome-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+}
+.welcome-profile-pic {    
+    height: 120px;
+    width: 120px;
+    border-radius: 100px;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+#welcome-icon {
+    font-size: 5rem;
 }

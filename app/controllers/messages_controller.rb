@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
     include ChatsHelper
     include UsersHelper
+    include MessagesHelper
 
     def index
         @friends = current_user.friends.map {|friend| friend.friend }.uniq
@@ -18,7 +19,7 @@ class MessagesController < ApplicationController
             chat = Chat.find(id)
             check_date = chat.messages.filter {|mes| mes.created_at.strftime("%D") == DateTime.now.strftime('%D')}
             if check_date.length == 0
-                @message = Message.create(user_id: current_user.id, chat_id: id, body: DateTime.now.strftime('%D'), is_date: true)
+                @message = Message.create(user_id: current_user.id, chat_id: id, body: DateTime.now.strftime('%D'), is_date: true, seen: true)
                 ActionCable.server.broadcast("ChatsChannel", {message: @message.body, is_date: true, chat_id: @message.chat.slug})
             end
             @message = Message.create(data)
@@ -41,16 +42,24 @@ class MessagesController < ApplicationController
     end
 
     def update
-        @message = Message.find(params[:chat_id])
-        @message.update
+        data = update_params
+        messages = get_unseen(data[:chat_id], current_user.id)
+        unless messages.nil?
+            messages.each {|mes| mes.update(seen: true)}
+        end
     end
 
     private
 
     def message_params
-        params.require(:message).permit(:user_id, :chat_id, :body)
+        params.require(:message).permit(:user_id, :chat_id, :body, :seen)
         {user_id: get_id(params[:message][:user_id]), chat_id: chat_id(params[:message][:chat_id]), 
-        body: params[:message][:body]}
+        body: params[:message][:body], seen: params[:message][:seen]}
+    end
+
+    def update_params
+        params.permit(:chat_id, :message)
+        {chat_id: chat_id(params[:chat_id])}
     end
 
 end

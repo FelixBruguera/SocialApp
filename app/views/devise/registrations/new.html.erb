@@ -3,7 +3,7 @@
       <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 <%= turbo_frame_tag id='signup' do %>
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: {turbo: false}) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
     <div id='form-names'>
     <div class="field">

@@ -20,6 +20,10 @@
             </span>
             <span class="icon is-medium is-left">
                 <%= link_to chats_path do%>
+                    <% unseen_chats = get_unseen_total(get_chats(current_user), current_user.id)%>
+                    <% if unseen_chats > 0 %>
+                        <div class='chats-count'><%=unseen_chats%></div>
+                    <% end %>
                     <i class="fas fa-comment"></i>
                 <% end %>
             </span>

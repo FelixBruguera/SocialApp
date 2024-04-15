@@ -15,4 +15,7 @@ class User < ApplicationRecord
   has_many :notifications, class_name: 'Notification', foreign_key: 'receiver'
   has_one_attached :cover_picture
   friendly_id :username, use: :slugged
+  has_many :chats
+  has_many :chats_friend, class_name: 'Chat', foreign_key: 'friend_id'
+  has_many :messages
 end

@@ -53,7 +53,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create_username(params)
-    username = "#{params[:user][:first_name]}-#{params[:user][:last_name]}-#{Random.rand(1000..9999)}"
+    username = "#{params[:user][:first_name].downcase}-#{params[:user][:last_name].downcase}-#{Random.rand(1000..9999)}"
     if User.all.any? {|u| u.username == username}
       create_username(params)
     else
@@ -70,7 +70,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    posts_path
+    welcome_path
   end
 
   # The path used after sign up for inactive accounts.

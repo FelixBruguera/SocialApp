@@ -8,4 +8,8 @@ module ChatsHelper
         Chat.friendly.find(chat).id
     end
 
+    def get_chats(user)
+        user.chats+user.chats_friend
+    end
+
 end

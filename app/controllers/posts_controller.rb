@@ -25,6 +25,10 @@ class PostsController < ApplicationController
          @post = Post.new
     end
 
+    def welcome
+        @user = current_user
+    end
+
     def create
         @post = Post.new(post_params)
         if @post.user == current_user

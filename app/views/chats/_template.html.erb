@@ -1,6 +1,4 @@
-<head>
-</head>
-<div id="chat" data-chat-id= <%= @chat.slug %>>
+<div id="chat" data-chat-id= <%= @chat.slug %> data-controller='messages' data-messages-target='chat'>
     <div class="chat-friend">
         <% if chat.user == current_user %>
             <% friend = chat.friend %>
@@ -16,7 +14,7 @@
         <% end %>
         </div>
     </div>
-    <div id="messages">
+    <div id="messages" data-action='scrollend->messages#scroll'>
         <% messages.each do |mes| %>
             <% if mes.is_date %>
                 <div class='chat-date'>

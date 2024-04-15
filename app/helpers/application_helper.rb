@@ -1,4 +1,7 @@
 module ApplicationHelper
+  include MessagesHelper
+  include ChatsHelper
+
     def resource_name
         :user
       end
