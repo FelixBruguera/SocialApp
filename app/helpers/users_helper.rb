@@ -8,6 +8,7 @@ module UsersHelper
     end
 
     def get_id(query)
+        return nil if query.nil?
         user = User.find_by(username: query)
         if user
             user.id

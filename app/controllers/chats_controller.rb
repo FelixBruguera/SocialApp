@@ -28,6 +28,6 @@ class ChatsController < ApplicationController
     private
     
     def chat_params
-        params.permit(:user_id, :friend_id)
+        params.permit(:user_id, :friend_id, :uuid)
     end
 end

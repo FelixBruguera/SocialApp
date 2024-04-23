@@ -15,10 +15,12 @@
                 <i class="fas fa-users has-text-link"></i>
                 <%= link_to 'Users', users_path %>
             </div>
+            <% unless current_user.pages.empty? %>
                 <div id="link-icon">
                     <i class="fas fa-bars has-text-link"></i>
-                    <%= link_to 'Settings', user_path(current_user)%>
+                    <%= link_to 'Pages', pages_path%>
                 </div>
+            <% end %>
     </div>
     <div id="posts-container">
         <div id="posts">

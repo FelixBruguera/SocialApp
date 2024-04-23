@@ -22,7 +22,7 @@
                     <%= f.label :location, 'Location: '%>
                     <%= f.select(:location, Countries: @countries.values) %>
                 </div>
-                <% unless @user.location.empty? || @user.location == 'None'%>
+                <% unless @user.location.empty? || @user.location.downcase == 'none'%>
                         <div id="profile-location" data-editprofile-target='currentLocation'>
                             <p id='profile-location'><%= @user.location%></p>
                             <%= image_tag("https://flagsapi.com/#{country_code(@user.location)}/flat/64.png", class:'flag')%>
@@ -52,7 +52,7 @@
                 <div id="info-loc-age">
                     <p id='profile-name'><%= @user.first_name+' '+@user.last_name%></p>
                     <div id="location-age">
-                    <% unless @user.location.empty? %>
+                    <% unless @user.location.empty? || @user.location == 'None'%>
                             <div id="profile-location" data-editprofile-target='currentLocation'>
                                 <p id='profile-location'><%= @user.location%></p>
                                 <%= image_tag("https://flagsapi.com/#{country_code(@user.location)}/flat/64.png", class:'flag')%>

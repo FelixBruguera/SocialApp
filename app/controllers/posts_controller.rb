@@ -4,7 +4,6 @@ class PostsController < ApplicationController
     before_action :resize, only: [:create]
 
     def index
-        @countries = JSON.load(File.open('countries'))
         friends = current_user.friends.map {|friend| friend.friend_id}
         @feed = Post.where(user_id: friends).or(Post.where(user_id: current_user)).paginate(page: 1, per_page: 10).order(created_at: :desc)
         @people = User.where.not(id: friends).and(User.where.not(id:current_user))
@@ -73,9 +72,9 @@ class PostsController < ApplicationController
     end
     
     def post_params
-        params.require(:post).permit(:body, :user_id, :image, :shared_post, :uuid)
+        params.require(:post).permit(:body, :user_id, :image, :shared_post, :uuid, :page_id)
         {user_id: get_id(params[:post][:user_id]), body: params[:post][:body], image: params[:post][:image],
-        shared_post: post_id(params[:post][:shared_post]), uuid: SecureRandom.uuid }
+        shared_post: post_id(params[:post][:shared_post]), page_id: params[:post][:page_id], uuid: SecureRandom.uuid}
     end
 
     def update_params

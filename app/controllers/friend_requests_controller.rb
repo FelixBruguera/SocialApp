@@ -12,8 +12,11 @@ class FriendRequestsController < ApplicationController
     end
     
     def create
-        @friend_request = FriendRequest.create(friend_request_params)
-        head :ok
+        data = friend_request_params
+        if data[:sender] == current_user.id
+            @friend_request = FriendRequest.create(data)
+            head :ok
+        end
     end
 
     def update

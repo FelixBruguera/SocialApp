@@ -18,4 +18,5 @@ class User < ApplicationRecord
   has_many :chats
   has_many :chats_friend, class_name: 'Chat', foreign_key: 'friend_id'
   has_many :messages
+  has_many :pages
 end
