@@ -46,6 +46,9 @@ import consumer from "channels/consumer"
                 </div>`
       },
       template2(chat, data) {
+        if (chat.children[1].children[1].children[0] == null) {
+          chat.children[1].children[1].insertAdjacentHTML('beforeend', '<p class="post-user" id="user-last-message"></p>')
+        }
         let currentUser = document.querySelector('#message_user_id').value
         if (data.current_user == currentUser) {
         chat.children[1].children[1].children[0].textContent = `You: ${data.message}`}

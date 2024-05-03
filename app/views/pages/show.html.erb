@@ -27,12 +27,12 @@
     </div>
     <div id="profile-content">
     <% if @page.user == current_user %>
-        <div id="profile-new-post"><%= turbo_frame_tag id='new-post-frame', src: new_post_path(post_type: 'new', is_page: true, page: @page)%></div>
+        <div id="profile-new-post"><%= turbo_frame_tag id='new-post-frame', src: new_post_path(post_type: 'new', is_page: true, page: @page.id)%></div>
     <% end %>
         <div id="posts-container">
             <div id='posts'>
                 <% @posts.each do |post| %>
-                    <%= render partial:'posts/post', locals: {post: post, location: 'feed', is_page: true}%>
+                    <%= render partial:'posts/post', locals: {post: post, location: 'feed'}%>
                 <% end %>
             </div>
             <% # unless @posts.next_page.nil? %>

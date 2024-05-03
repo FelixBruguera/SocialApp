@@ -5,7 +5,7 @@ class PostsController < ApplicationController
 
     def index
         friends = current_user.friends.map {|friend| friend.friend_id}
-        @feed = Post.where(user_id: friends).or(Post.where(user_id: current_user)).paginate(page: 1, per_page: 10).order(created_at: :desc)
+        @feed = Post.where(user_id: friends).or(Post.where(user_id: current_user)).or(Post.where.not(page_id: nil)).paginate(page: 1, per_page: 10).order(created_at: :desc)
         @people = User.where.not(id: friends).and(User.where.not(id:current_user))
         @people = @people.filter {|person| find_request(current_user, person).nil? }
         @page = 1
@@ -29,11 +29,17 @@ class PostsController < ApplicationController
     end
 
     def create
-        @post = Post.new(post_params)
+        data = post_params
+        data[:user_id] =  current_user.id
+        data[:uuid] = SecureRandom.uuid
+        unless data[:shared_post].nil?
+          data[:shared_post] = Post.friendly.find(data[:shared_post]).id
+        end
+        @post = Post.new(data)
         if @post.user == current_user
             if @post.save
                 unless @post.shared_post.nil?
-                    poster = Post.friendly.find(@post.shared_post).user
+                    poster = Post.find(@post.shared_post).user
                     unless poster == @post.user
                         Notification.create(sender:@post.user, receiver: poster, post_id: @post.shared_post, action: 'shared')
                     end
@@ -41,7 +47,7 @@ class PostsController < ApplicationController
                 respond_to do |format|
                     format.turbo_stream do
                         render turbo_stream: turbo_stream.prepend("posts", partial: "posts/post",
-                            locals: { post: @post, location: 'feed' })
+                            locals: { post: @post, location: 'feed', is_page: @post.page_id})
                     end
                 end
             else
@@ -70,11 +76,9 @@ class PostsController < ApplicationController
             )
         end
     end
-    
+
     def post_params
-        params.require(:post).permit(:body, :user_id, :image, :shared_post, :uuid, :page_id)
-        {user_id: get_id(params[:post][:user_id]), body: params[:post][:body], image: params[:post][:image],
-        shared_post: post_id(params[:post][:shared_post]), page_id: params[:post][:page_id], uuid: SecureRandom.uuid}
+        params.require(:post).permit(:body, :image, :shared_post, :uuid, :page_id, :user_id)
     end
 
     def update_params

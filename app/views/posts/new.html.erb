@@ -11,8 +11,6 @@
         <%= form_with model: @post, method: :post do |f| %>
             <% if params[:is_page] %>
                 <%= f.hidden_field :page_id, :value => params[:page] %>
-            <% else %>
-                <%= f.hidden_field :user_id, :value => current_user.slug %>
             <% end %>
             <% if post_type == 'shared'%>
                 <%= f.hidden_field :shared_post, :value => params[:post] %>

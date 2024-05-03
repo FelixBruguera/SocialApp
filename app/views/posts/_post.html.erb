@@ -3,13 +3,13 @@
 </head>
 
 <div class=<%= location == 'feed' ? 'post-feed' : 'post'%>>
-                <% if is_page %>
+                <% if post.page_id %>
                     <div class="user-pic">
-                        <%= link_to page_path(post.page) do %>
+                        <%= link_to page_path(post.page_id) do %>
                             <%= image_tag(post.page.profile_picture, class: 'profile-pic') %>
                         <% end %>
                         <div class="user-date">
-                            <%= link_to page_path(post.page) do %>
+                            <%= link_to page_path(post.page_id) do %>
                                 <p class='post-user'><%= post.page.name%></p>
                             <% end %>
                             <p class='post-date'><%= post.created_at.strftime('%D at %R') %></p>
@@ -79,7 +79,7 @@
                 </div>
             <% end %>
             <% if location == 'feed' && post.comments.count > 3 %>
-                <%= link_to 'View more comments', post_path(post), class: 'more-comments'%>
+                <%= link_to 'View more comments', post_path(post, is_page: false), class: 'more-comments'%>
             <% end %>
         </div>
     </div>

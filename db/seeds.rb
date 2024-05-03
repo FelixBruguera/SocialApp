@@ -8,7 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # User.create(first_name: 'Betzabeth', last_name: 'Bruguera', email: 'betza@gmail.com', password: 123456, profile_picture: 'assets/images/pfp.jpg')
-# User.create(first_name: 'Test', last_name: 'Two', email: 't@2.com', password: 123456)
+User.create(first_name: 'Test', last_name: 'Two', email: 't@2.com', password: 123456)
 # Friend.create(user_id: User.first.id, friend_id: User.last.id)
 # Post.create(body:'testing posts', user_id:6)
 # Post.create(body:'another testing posts', user_id:6)
