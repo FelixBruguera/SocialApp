@@ -14,7 +14,8 @@ class PagesController < ApplicationController
 
     def show
         @page = Page.friendly.find(params[:id])
-        @posts = @page.posts
+        @posts = @page.posts.paginate(page: 1, per_page: 10).order(created_at: :desc)
+        @photos = @page.posts.joins(:image_attachment).order('created_at DESC').take(6)
     end
 
     def update

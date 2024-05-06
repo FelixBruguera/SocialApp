@@ -1,13 +1,11 @@
 class Post < ApplicationRecord
     extend FriendlyId
-    belongs_to :user
-    has_many :comments
-    has_many :reactions
-    has_one_attached :image
-    # has_one :shared_post, class_name: 'Post', foreign_key: 'shared_post'
-    # belongs_to :post, class_name: 'Post', foreign_key: 'shared_post'
-    has_many :shares, class_name: 'Post', foreign_key: 'shared_post'
-    has_many :notifications
+    belongs_to :user, optional: true
+    has_many :comments, dependent: :destroy
+    has_many :reactions, dependent: :destroy
+    has_one_attached :image, dependent: :destroy
+    has_many :shares, class_name: 'Post', foreign_key: 'shared_post', dependent: :destroy
+    has_many :notifications, dependent: :destroy
     friendly_id :uuid, use: :slugged
-    belongs_to :page
+    belongs_to :page, optional: true
 end

@@ -35,7 +35,7 @@
                 <% end %>
             <% end %>
             <% unless post.shared_post.nil? %>
-                <%= render partial:'posts/shared_post', locals: {'post': Post.friendly.find(post.shared_post)}%>
+                <%= render partial:'posts/shared_post', locals: {'post': Post.friendly.find(post.shared_post), is_page: Post.friendly.find(post.shared_post).page_id}%>
             <% end %>
     <div class="post-lower">
         <div class="post-info">
