@@ -17,7 +17,8 @@ import consumer from "channels/consumer"
         // console.log(data)
         let chatId = data.chat_id
         const chatBox = document.querySelector(`a[data-chat-id="${chatId}"]`)
-        this.template2(chatBox,data)
+        if (data.is_date) {}
+        else { this.template2(chatBox,data) }
         if (data.chat_id == chatId) {
           const messageDisplay = document.querySelector('#messages')
           messageDisplay.insertAdjacentHTML('beforeend', this.template(data))}
@@ -46,17 +47,17 @@ import consumer from "channels/consumer"
                 </div>`
       },
       template2(chat, data) {
-        if (chat.children[1].children[1].children[0] == null) {
-          chat.children[1].children[1].insertAdjacentHTML('beforeend', '<p class="post-user" id="user-last-message"></p>')
+        if (chat.querySelector('#user-last-message') == null) {
+          chat.querySelector('.last').insertAdjacentHTML('beforeend', '<p class="post-user" id="user-last-message"></p>')
         }
         let currentUser = document.querySelector('#message_user_id').value
         if (data.current_user == currentUser) {
-        chat.children[1].children[1].children[0].textContent = `You: ${data.message}`}
+        chat.querySelector('#user-last-message').textContent = `You: ${data.message}`}
         else {
-          chat.children[1].children[1].children[0].textContent = data.message
-          let count = chat.children[1].children[1].children[1]
+          chat.querySelector('#user-last-message').textContent = data.message
+          let count = chat.querySelector('messages-count')
           if (count == null) {
-            return chat.children[1].children[1].insertAdjacentHTML('beforeend', "<div class='messages-count'>1</div>")}
+            return chat.querySelector('.last').insertAdjacentHTML('beforeend', "<div class='messages-count'>1</div>")}
           else {
               count.textContent = parseInt(count.textContent) + 1
             }

@@ -38,25 +38,25 @@ class PostsController < ApplicationController
         unless data[:shared_post].nil?
           data[:shared_post] = Post.friendly.find(data[:shared_post]).id
         end
-        p data
         @post = Post.new(data)
-        if @post.user == current_user || @post.page.user == current_user
-            if @post.save
-                unless @post.shared_post.nil?
-                    poster = Post.find(@post.shared_post).user
-                    unless poster == @post.user
-                        Notification.create(sender:@post.user, receiver: poster, post_id: @post.shared_post, action: 'shared')
-                    end
+        unless @post.user == current_user || @post.page.user == current_user
+            return render root_path, status: :unprocessable_entity
+        end
+        if @post.save
+            unless @post.shared_post.nil?
+                poster = Post.find(@post.shared_post).user
+                unless poster == @post.user
+                    Notification.create(sender:@post.user, receiver: poster, post_id: @post.shared_post, action: 'shared')
                 end
-                respond_to do |format|
-                    format.turbo_stream do
-                        render turbo_stream: turbo_stream.prepend("posts", partial: "posts/post",
-                            locals: { post: @post, location: 'feed', is_page: @post.page_id})
-                    end
-                end
-            else
-                render root_path, status: :unprocessable_entity
             end
+            respond_to do |format|
+                format.turbo_stream do
+                    render turbo_stream: turbo_stream.prepend("posts", partial: "posts/post",
+                        locals: { post: @post, location: 'feed', is_page: @post.page_id})
+                end
+            end
+        else
+            render root_path, status: :unprocessable_entity
         end
     end
 

@@ -14,7 +14,7 @@
         <% end %>
         </div>
     </div>
-    <div id="messages" data-action='scrollend->messages#scroll'>
+    <div id="messages" data-action='mouseover->messages#scroll'>
         <% messages.each do |mes| %>
             <% if mes.is_date %>
                 <div class='chat-date'>

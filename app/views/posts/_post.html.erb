@@ -42,11 +42,11 @@
             <span class="icon-text is-small is-centered has-text-link" id='reactions' data-controller='likes'>
                 <p class='reactions-count' data-likes-target='count'><%= post.reactions.count %></p>
                 <% if post.reactions.where(user_id: current_user.id).exists? %>
-                    <%= link_to reactions_path(user_id: current_user.slug, post_id: post.slug, reaction: 'like'), data: {turbo_method: :post, remote: :true, 'likes-target': 'button'} do %>
+                    <%= link_to reactions_path(post_id: post.slug, reaction: 'like'), data: {turbo_method: :post, remote: :true, 'likes-target': 'button'} do %>
                             <i class="fas fa-thumbs-up" data-action='click->likes#toggle'></i>
                     <% end %>
                 <% else %>
-                    <%= link_to reactions_path(user_id: current_user.slug, post_id: post.slug, reaction: 'like'), class: 'unliked', data: {turbo_method: :post, remote: :true, 'likes-target': 'button'} do %>
+                    <%= link_to reactions_path(post_id: post.slug, reaction: 'like'), class: 'unliked', data: {turbo_method: :post, remote: :true, 'likes-target': 'button'} do %>
                             <i class="fas fa-thumbs-up" data-action='click->likes#toggle'></i>
                     <% end %>
                 <% end %>

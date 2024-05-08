@@ -8,6 +8,8 @@ class ReactionsController < ApplicationController
 
     def create
         data = reaction_params
+        data[:user_id] = current_user.id
+        data[:post_id] = Post.friendly.find(data[:post_id]).id
         @reaction = Reaction.new(data)
         if @reaction.user == current_user
             if @reaction.save
@@ -22,9 +24,8 @@ class ReactionsController < ApplicationController
     end
 
     private
-    
+
     def reaction_params
         params.permit(:user_id, :post_id, :reaction)
-        {user_id: get_id(params[:user_id]), post_id: post_id(params[:post_id]), reaction: params[:reaction]}
     end
 end
