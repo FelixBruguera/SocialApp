@@ -2,6 +2,7 @@ class User < ApplicationRecord
   extend FriendlyId
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :omniauthable, omniauth_providers: [:google_oauth2]
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :posts, dependent: :destroy
@@ -19,4 +20,24 @@ class User < ApplicationRecord
   has_many :chats_friend, class_name: 'Chat', foreign_key: 'friend_id', dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :pages
+  #validates :birthday, comparison: { less_than: Date.today }
+
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    user = User.where(email: data['email']).first
+    unless user
+        user = User.create(first_name: data['first_name'],
+        last_name: data['last_name'],
+        email: data['email'],
+        password: Devise.friendly_token[0,20],
+        uuid: SecureRandom.uuid,
+        username: "#{data[:first_name].downcase}-#{data[:last_name].downcase}-#{Random.rand(1000..9999)}",
+        provider: 'Google',
+        profile_picture: File.open('app/assets/images/pfp.jpg'),
+        cover_picture: File.open('app/assets/images/cover_default.jpg')
+        )
+    end
+    user
+  end
+
 end

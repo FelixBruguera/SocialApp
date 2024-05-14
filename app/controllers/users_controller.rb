@@ -37,7 +37,7 @@ class UsersController < ApplicationController
             end
             format.html
         end
-        
+
     end
 
     def update
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     end
 
     def update_params
-        params.require(:user).permit(:cover_picture, :profile_picture, :bio, :location, :current_password)
+        params.require(:user).permit(:cover_picture, :profile_picture, :bio, :location, :current_password, :birthday)
     end
 
     def resize
@@ -80,4 +80,3 @@ class UsersController < ApplicationController
         end
     end
 end
-

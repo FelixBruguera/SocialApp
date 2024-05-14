@@ -77,3 +77,9 @@ gem 'will_paginate', '~> 4.0'
 
 gem 'friendly_id', '~> 5.5.0'
 
+gem 'omniauth-google-oauth2'
+
+gem 'omniauth-rails_csrf_protection'
+
+gem 'figaro'
+

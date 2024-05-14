@@ -21,6 +21,10 @@
                 <div class="edit-form" id="location-edit" data-editprofile-target='location'>
                     <%= f.label :location, 'Location: '%>
                     <%= f.select(:location, Countries: @countries.values) %>
+                    <% unless @user.birthday %>
+                        <%= f.label :birthday, 'Birthday: '%>
+                        <%= f.date_field(:birthday) %>
+                    <% end %>
                 </div>
                 <% unless @user.location.empty? || @user.location.downcase == 'none'%>
                         <div id="profile-location" data-editprofile-target='currentLocation'>
@@ -29,9 +33,11 @@
                         </div>
                 <% end %>
                         <div id="profile-age">
-                            <% age = (Date.today.year - @user.birthday.year).to_i %>
-                            <% if @user.birthday.yday > Date.today.yday then age = age-1 end%>
-                            <p>Age: <%= age %></p>
+                            <%if @user.birthday %>
+                                <% age = (Date.today.year - @user.birthday.year).to_i %>
+                                <% if @user.birthday.yday > Date.today.yday then age = age-1 end%>
+                                <p>Age: <%= age %></p>
+                            <% end %>
                         </div>
                     </div>
             </div>
