@@ -20,7 +20,8 @@ class User < ApplicationRecord
   has_many :chats_friend, class_name: 'Chat', foreign_key: 'friend_id', dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :pages
-  #validates :birthday, comparison: { less_than: Date.today }
+  validates :birthday, comparison: { less_than: Date.today- 10.years, message: ': You must be at least 10 years old'}, if: -> {birthday.present?}
+  validates :username, uniqueness: true
 
   def self.from_omniauth(access_token)
     data = access_token.info

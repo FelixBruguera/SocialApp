@@ -51,12 +51,21 @@ class PostsController < ApplicationController
             end
             respond_to do |format|
                 format.turbo_stream do
-                    render turbo_stream: turbo_stream.prepend("posts", partial: "posts/post",
-                        locals: { post: @post, location: 'feed', is_page: @post.page_id})
+                    render turbo_stream: [
+                        turbo_stream.prepend("posts", partial: "posts/post",
+                        locals: { post: @post, location: 'feed', is_page: @post.page_id}),
+                        turbo_stream.remove('error-div')
+                    ]
                 end
+                format.html
             end
         else
-            render root_path, status: :unprocessable_entity
+            respond_to do |format|
+                format.turbo_stream do
+                    render turbo_stream: turbo_stream.prepend("feed", partial: 'posts/errors',
+                    locals: {errors: @post.errors.full_messages})
+                end
+            end
         end
     end
 

@@ -1125,3 +1125,11 @@ input.edit-form, div.edit-form, .edit-form {
 #welcome-icon {
     font-size: 5rem;
 }
+#error-div {
+    width: 100%;
+    height: fit-content;
+    margin-top: 1%;
+    background-color: yellow;
+    font-weight: 800;
+    text-align: center;
+}

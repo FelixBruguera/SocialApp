@@ -37,7 +37,6 @@ class UsersController < ApplicationController
             end
             format.html
         end
-
     end
 
     def update
@@ -46,7 +45,8 @@ class UsersController < ApplicationController
             if @user.update(update_params)
                 redirect_to user_path(@user)
             else
-                render @user, status: :unprocessable_entity
+                flash[:errors] = @user.errors.full_messages
+                redirect_to @user
             end
         end
     end

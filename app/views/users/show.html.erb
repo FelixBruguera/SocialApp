@@ -2,6 +2,13 @@
     <% stylesheet_link_tag 'general'%>
 </head>
 <%= render partial:'layouts/hero', locals: {'status': 'feed'}%>
+<% if flash[:errors]%>
+    <div id="error-div">
+        <% flash[:errors].each do |err|%>
+            <%= err%>
+        <% end %>
+    </div>
+<% end %>
 <% if @user == current_user %>
     <%= form_with model: @user, data: {controller: 'editprofile', turbo: false}, id:'profile-pictures', method: :patch do |f| %>
     <div id="cover-form">
