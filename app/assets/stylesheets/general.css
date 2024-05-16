@@ -194,6 +194,14 @@ turbo-frame > a {
     font-weight: 500;
     color: var(--logo);
 }
+.comment-user { 
+    color: black;
+    font-size: 0.8rem;
+}
+.comment-user:hover {
+    font-weight: 500;
+    color: var(--logo);
+}
 .post-date {
     grid-area: 1 / 1 / 2 / 1 ;
     font-size: 0.8rem;

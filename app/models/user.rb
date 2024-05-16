@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :reactions, dependent: :destroy
   has_many :friends, dependent: :destroy
+  has_many :reverse_friends, class_name: 'Friend', foreign_key: 'friend_id', dependent: :destroy
   has_many :friend_requests, foreign_key: :receiver, dependent: :destroy
   has_many :friend_requests_sent, foreign_key: :sender, class_name: 'FriendRequest', dependent: :destroy
   has_one_attached :profile_picture, dependent: :destroy

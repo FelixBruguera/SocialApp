@@ -17,7 +17,7 @@
             <% end %>
             <div id="new-post-fields">
                 <% if post_type == 'new' %>
-                    <%= f.text_field :body, placeholder: "What's on your mind, #{current_user.first_name}?", id: 'text-field'%>
+                    <%= f.text_field :body, placeholder: "What's on your mind, #{current_user.first_name}?", id: 'text-field', required: true%>
                 <% else %>
                     <%= f.text_field :body, placeholder: "Say something", id: 'text-field'%>
                 <% end %>

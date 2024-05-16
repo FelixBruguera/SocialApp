@@ -7,7 +7,10 @@ class CommentsController < ApplicationController
     end
 
     def create
-        @comment = Comment.new(comment_params)
+        data = comment_params
+        data[:post_id] = Post.friendly.find(data[:post_id]).id
+        data[:user_id] = current_user.id
+        @comment = Comment.new(data)
         if @comment.user == current_user
             respond_to do |format|
                 if @comment.save
@@ -19,6 +22,9 @@ class CommentsController < ApplicationController
                         render turbo_stream: turbo_stream.append("comments_#{@comment.post.slug}", partial: "comments/comment",
                             locals: { comment: @comment })
                     end
+                else
+                    format.turbo_stream do
+                    end
                 end
             end
         end
@@ -27,6 +33,5 @@ class CommentsController < ApplicationController
     private
     def comment_params
         params.require(:comment).permit(:user_id, :post_id, :body)
-        {user_id: get_id(params[:comment][:user_id]), post_id: post_id(params[:comment][:post_id]), body: params[:comment][:body]}
     end
 end
