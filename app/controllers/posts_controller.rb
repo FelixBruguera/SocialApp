@@ -6,7 +6,7 @@ class PostsController < ApplicationController
     def index
         friends = current_user.friends.map {|friend| friend.friend_id}
         @feed = Post.where(user_id: friends).or(Post.where(user_id: current_user)).or(Post.where.not(page_id: nil)).paginate(page: 1, per_page: 10).order(created_at: :desc)
-        @people = User.where.not(id: friends).and(User.where.not(id:current_user))
+        @people = User.where.not(id: friends).and(User.where.not(id:current_user)).and(User.where(is_guest: nil))
         @people = @people.filter {|person| find_request(current_user, person).nil? }
         unless @people.empty? then @people = @people.take(3) end
         respond_to do |format|

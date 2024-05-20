@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     before_action :resize, only: [:update]
 
     def index
-        @users = User.all
+        @users = User.all.where(is_guest: nil)
     end
 
     def new
@@ -15,10 +15,17 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.new(user_params)
-        if @user.save
+        if params[:is_guest]
+            data = guest_params
+            @user = User.new(data)
         else
-            p 'error creating'
+            @user = User.new(user_params)
+        end
+        if @user.save
+            sign_in @user
+            redirect_to welcome_path
+        else
+            p @user.errors.full_messages
         end
     end
 
@@ -59,6 +66,14 @@ class UsersController < ApplicationController
 
     def update_params
         params.require(:user).permit(:cover_picture, :profile_picture, :bio, :location, :current_password, :birthday)
+    end
+
+    def guest_params
+        user = {first_name: 'Guest', last_name: Random.rand(111..999), email: "#{SecureRandom.hex(6)}@#{SecureRandom.hex(6)}.com",
+        encrypted_password: 123456, password: 123456, uuid: SecureRandom.uuid, profile_picture: File.open('app/assets/images/pfp.jpg'),
+        cover_picture: File.open('app/assets/images/cover_default.jpg'), is_guest: true}
+        user[:username] = "#{user[:first_name].downcase}-#{user[:last_name]}-#{Random.rand(1000..9999)}"
+        user
     end
 
     def resize

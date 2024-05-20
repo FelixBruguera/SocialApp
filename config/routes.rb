@@ -31,4 +31,5 @@ Rails.application.routes.draw do
   post 'pages/:id(:page)', to: 'pages#show'
   post 'messages_read', to: 'messages#update'
   get 'welcome', to: 'posts#welcome'
+  get 'guest', to: 'users#create'
 end

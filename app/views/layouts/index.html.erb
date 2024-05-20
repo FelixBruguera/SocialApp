@@ -24,7 +24,9 @@
                         <button class='button is-medium unfocused is-ghost' id='landing-button' data-action='landing#signup'>Sign up</button>
                     <% end %>
                     <% end %>
+                    <%= link_to 'guest?is_guest=true', id: 'sign-up-link' do %>
                         <button class='button is-medium unfocused is-ghost' id='landing-button' data-landing-target='guest'>Login as Guest</button>
+                    <% end %>
                 </div>
             </div>
         </div>
