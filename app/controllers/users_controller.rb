@@ -31,6 +31,7 @@ class UsersController < ApplicationController
 
     def show
         @countries = JSON.load(File.open('countries'))
+        @min_date = Date.today- 10.years
         @user = User.friendly.find(params[:username])
         @friends = @user.friends.map {|friend| friend.friend_id}
         @photos = @user.posts.joins(:image_attachment).order('created_at DESC').take(6)
@@ -49,6 +50,13 @@ class UsersController < ApplicationController
     def update
         @user = User.friendly.find(params[:id])
         if @user == current_user
+            p update_params
+            if update_params[:profile_picture].present?
+                @user.profile_picture_attachment.purge
+            end
+            if update_params[:cover_picture].present?
+                @user.cover_picture_attachment.purge
+            end
             if @user.update(update_params)
                 redirect_to user_path(@user)
             else

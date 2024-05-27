@@ -83,3 +83,5 @@ gem 'omniauth-rails_csrf_protection'
 
 gem 'figaro'
 
+
+gem "aws-sdk-s3", "~> 1.151"

@@ -27,13 +27,14 @@ class User < ApplicationRecord
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(email: data['email']).first
+    last_name = data['last_name'].present? ? data['last_name'] : ' '
     unless user
         user = User.create(first_name: data['first_name'],
-        last_name: data['last_name'],
+        last_name: last_name,
         email: data['email'],
         password: Devise.friendly_token[0,20],
         uuid: SecureRandom.uuid,
-        username: "#{data[:first_name].downcase}-#{data[:last_name].downcase}-#{Random.rand(1000..9999)}",
+        username: "#{data[:first_name].downcase}-#{last_name.downcase}-#{Random.rand(1000..9999)}",
         provider: 'Google',
         profile_picture: File.open('app/assets/images/pfp.jpg'),
         cover_picture: File.open('app/assets/images/cover_default.jpg')

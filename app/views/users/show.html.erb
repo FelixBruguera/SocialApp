@@ -30,7 +30,7 @@
                     <%= f.select(:location, Countries: @countries.values) %>
                     <% unless @user.birthday %>
                         <%= f.label :birthday, 'Birthday: '%>
-                        <%= f.date_field(:birthday) %>
+                        <%= f.date_field(:birthday, max: @min_date)%>
                     <% end %>
                 </div>
                 <% unless @user.location.empty? || @user.location.downcase == 'none'%>

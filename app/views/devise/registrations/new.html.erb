@@ -7,29 +7,29 @@
     <%= render "devise/shared/error_messages", resource: resource %>
     <div id='form-names'>
     <div class="field">
-      <%= f.text_field :first_name, placeholder: 'First name' %>
+      <%= f.text_field :first_name, placeholder: 'First name', required: true%>
     </div>
 
     <div class="field">
-      <%= f.text_field :last_name, placeholder: 'Last name'  %>
+      <%= f.text_field :last_name, placeholder: 'Last name', required: true%>
     </div>
     </div>
 
     <div id="form-names">
       <div class="field">
-        <%= f.email_field :email, placeholder: 'Email' , autocomplete: "email" %>
+        <%= f.email_field :email, placeholder: 'Email' , autocomplete: "email", required: true%>
       </div>
       <div class="field">
-        <%= f.text_field :birthday, onfocus: 'this.type="date"', placeholder: 'Birthday'%>
+        <%= f.text_field :birthday, onfocus: 'this.type="date"', placeholder: 'Birthday', required: true, max: Date.today- 10.years%>
       </div>
     </div>
 
     <div id="form-names">
       <div class="field">
-        <%= f.password_field :password, placeholder: 'Password', autocomplete: "new-password" %>
+        <%= f.password_field :password, placeholder: 'Password', autocomplete: "new-password", required: true%>
       </div>
       <div class="field">
-        <%= f.password_field :password_confirmation, placeholder: 'Password confirmation' , autocomplete: "new-password" %>
+        <%= f.password_field :password_confirmation, placeholder: 'Password confirmation' , autocomplete: "new-password", required: true%>
       </div>
     </div>
 
