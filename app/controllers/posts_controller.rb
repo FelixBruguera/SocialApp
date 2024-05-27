@@ -28,17 +28,7 @@ class PostsController < ApplicationController
     end
 
     def create
-        data = post_params
-        if data[:page_id].present?
-            data[:page_id] = Page.friendly.find(data[:page_id]).id
-        else
-            data[:user_id] =  current_user.id
-        end
-        data[:uuid] = SecureRandom.uuid
-        unless data[:shared_post].nil?
-          data[:shared_post] = Post.friendly.find(data[:shared_post]).id
-        end
-        @post = Post.new(data)
+        @post = Post.new(post_params_edited)
         unless @post.user == current_user || @post.page.user == current_user
             return render root_path, status: :unprocessable_entity
         end
@@ -92,6 +82,20 @@ class PostsController < ApplicationController
 
     def post_params
         params.require(:post).permit(:body, :image, :shared_post, :uuid, :page_id, :user_id)
+    end
+
+    def post_params_edited
+        data = post_params
+        if data[:page_id].present?
+            data[:page_id] = Page.friendly.find(data[:page_id]).id
+        else
+            data[:user_id] =  current_user.id
+        end
+        data[:uuid] = SecureRandom.uuid
+        unless data[:shared_post].nil?
+            data[:shared_post] = Post.friendly.find(data[:shared_post]).id
+        end
+        data
     end
 
     def update_params

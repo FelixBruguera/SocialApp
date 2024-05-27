@@ -64,7 +64,7 @@
                     </div>
             </span>
         </div>
-            <%= turbo_frame_tag id='comments-frame', src:new_comment_path(user_id: current_user.uuid, post_id: post.slug)%>
+            <%= turbo_frame_tag id='comments-frame', src:new_comment_path(post_id: post.slug)%>
         <div id='comments_<%=post.slug%>'>
             <% comments = location == 'feed' ? post.comments.limit(3) : post.comments %>
             <% comments.each do |comment| %>

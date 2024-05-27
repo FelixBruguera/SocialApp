@@ -10,9 +10,9 @@ class FriendRequestsController < ApplicationController
     def new
         @friend_request = FriendRequest.new
     end
-    
+
     def create
-        data = friend_request_params
+        data = friend_request_params_edited
         if data[:sender] == current_user.id
             @friend_request = FriendRequest.create(data)
             head :ok
@@ -30,10 +30,17 @@ class FriendRequestsController < ApplicationController
     end
 
     private
-    
+
     def friend_request_params
-        params.permit(:sender, :receiver)
-        {sender: get_id(params[:sender]), receiver: get_id(params[:receiver]), uuid: SecureRandom.uuid}
+        params.permit(:receiver)
+    end
+
+    def friend_request_params_edited
+        data = friend_request_params
+        data[:sender] =  current_user.id
+        data[:receiver] = User.friendly.find(data[:receiver]).id
+        data[:uuid] =  SecureRandom.uuid
+        data
     end
 
     def update_params

@@ -72,24 +72,26 @@
                             </div>
                     <% end %>
                             <div id="profile-age">
-                                <% age = (Date.today.year - @user.birthday.year).to_i %>
-                                <% if @user.birthday.yday > Date.today.yday then age = age-1 end%>
-                                <p>Age: <%= age %></p>
+                                <%if @user.birthday %>
+                                    <% age = (Date.today.year - @user.birthday.year).to_i %>
+                                    <% if @user.birthday.yday > Date.today.yday then age = age-1 end%>
+                                    <p>Age: <%= age %></p>
+                                <% end %>
                             </div>
                         </div>
                 </div>
             </div>
             <% if @friendship == 'friends' %>
-                    <button popovertarget='confirmation' class='button is-small unfocused' data-controller= 'friendship' data-friendship-target='button' data-action='mouseover->friendship#destroy mouseout->friendship#restore'>Friends</button>
-                    <div popover id='confirmation'>
+                    <button popovertarget='confirmation' class='button is-small unfocused unfriendButton' data-controller= 'friendship' data-friendship-target='button' data-action='mouseover->friendship#destroy mouseout->friendship#restore'>Friends</button>
+                    <div popover id='confirmation' data-controller= 'friendship' data-friendship-target='confirmBox'>
                         <div id="confirmation-box">
                             <p id='confirmation-title'>Are you sure?</p>
                             <p id='confirmation-text'>Press ESC to cancel</p>
-                            <%= link_to 'Unfriend', friend_path(find_friendship(current_user.slug, @user.slug), friend_id: @user.slug), data: {turbo_method: :delete}, class:'button is-small is-danger'%>
+                            <%= link_to 'Unfriend', friend_path(find_friendship(current_user.slug, @user.slug)), data: {turbo_method: :delete, 'friendship-target': 'confirmButton', 'action': 'click->friendship#confirm'}, class:'button is-small is-danger'%>
                         </div>
                     </div>
             <% elsif @friendship == 'noFriends' %>
-                <%= link_to friend_requests_path(sender: current_user.slug, receiver: @user.slug), data: {turbo_method: :post, controller: 'friendrequests'} do %>
+                <%= link_to friend_requests_path(receiver: @user.slug), data: {turbo_method: :post, controller: 'friendrequests'} do %>
                     <button class='button is-small unfocused' data-friendrequests-target='button' data-action='click->friendrequests#change'>Add Friend</button>
                 <% end %>
             <% else %>

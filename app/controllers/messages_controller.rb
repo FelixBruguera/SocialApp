@@ -24,7 +24,7 @@ class MessagesController < ApplicationController
             ActionCable.server.broadcast("ChatsChannel", {message: @message.body, is_date: true, chat_id: @message.chat.slug})
         end
         @message = Message.create(data)
-        ActionCable.server.broadcast("ChatsChannel", {
+            ActionCable.server.broadcast("ChatsChannel", {
         message: @message.body,
         chat_id: @message.chat.slug,
         current_user: current_user.slug,
@@ -52,7 +52,7 @@ class MessagesController < ApplicationController
     private
 
     def message_params
-        params.require(:message).permit(:user_id, :chat_id, :body, :seen)
+        params.require(:message).permit(:chat_id, :body, :seen)
     end
 
     def update_params

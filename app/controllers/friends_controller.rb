@@ -8,10 +8,10 @@ class FriendsController < ApplicationController
     end
 
     def create
-        users = friends_params
-        @friendship = Friend.new(users)
+        users = friend_params_edited
+        @friendship = Friend.new(users.except(:id))
         if @friendship.save
-            request = find_request(users[:user_id], users[:friend_id]).id
+            request = FriendRequest.friendly.find(users[:id]).id
             FriendRequest.destroy(request)
             create_chat(users[:user_id], users[:friend_id])
             create_inverse_friendship(users)
@@ -19,23 +19,29 @@ class FriendsController < ApplicationController
     end
 
     def destroy
-        @friendship = Friend.friendly.find(params[:id])
-        users = {user_id: @friendship.user_id, friend_id: @friendship.friend_id}
-        @friendship.destroy
-        destroy_inverse_friendship(users)
-        redirect_to user_path(params[:friend_id], data: {turbo:false})
+        friendship = Friend.friendly.find(params[:id])
+        users = {user_id: friendship.user_id, friend_id: friendship.friend_id}
+        if friendship.destroy
+            destroy_inverse_friendship(users)
+        end
     end
 
     private
 
     def friends_params
-        params.permit(:user_id, :friend_id, :id, :uuid)
-        {user_id: get_id(params[:user_id]), friend_id: get_id(params[:friend_id]), id: params[:id], 
-        uuid: SecureRandom.uuid}
+        params.permit(:id)
+    end
+
+    def friend_params_edited
+        data = friends_params
+        data[:user_id] = User.find(FriendRequest.friendly.find(data[:id]).sender).id
+        data[:friend_id] = User.find(FriendRequest.friendly.find(data[:id]).receiver).id
+        data[:uuid] = SecureRandom.uuid
+        data
     end
 
     def create_inverse_friendship(users)
-        @friendship = Friend.new(user_id: users[:friend_id], friend_id: users[:user_id], uuid: SecureRandom.uuid).save
+        @friendship = Friend.create(user_id: users[:friend_id], friend_id: users[:user_id], uuid: SecureRandom.uuid)
     end
 
     def destroy_inverse_friendship(users)

@@ -58,6 +58,10 @@ class UsersController < ApplicationController
         end
     end
 
+    def current
+        render json: {user: current_user.slug}
+    end
+
     private
 
     def user_params

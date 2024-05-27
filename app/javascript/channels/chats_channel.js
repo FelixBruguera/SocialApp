@@ -14,17 +14,23 @@ import consumer from "channels/consumer"
       },
 
       received(data) {
+        function getUser() {
+          const request = new XMLHttpRequest()
+          request.open("GET",'/current_user', false);
+          request.send();
+          return JSON.parse(request.response)['user']
+        }
+        let currentUser = getUser()
         // console.log(data)
         let chatId = data.chat_id
         const chatBox = document.querySelector(`a[data-chat-id="${chatId}"]`)
         if (data.is_date) {}
-        else { this.template2(chatBox,data) }
+        else { this.template2(chatBox,data, currentUser) }
         if (data.chat_id == chatId) {
           const messageDisplay = document.querySelector('#messages')
-          messageDisplay.insertAdjacentHTML('beforeend', this.template(data))}
+          messageDisplay.insertAdjacentHTML('beforeend', this.template(data, currentUser))}
       },
-      template(data) {
-        let currentUser = document.querySelector('#message_user_id').value
+      template(data, currentUser) {
         // console.log(data.is_date)
         // console.log(data.is_date == true)
         if (data.is_date == true) {
@@ -46,16 +52,16 @@ import consumer from "channels/consumer"
                     <p class="message-date">${data.date}</p>
                 </div>`
       },
-      template2(chat, data) {
+      template2(chat, data, currentUser) {
         if (chat.querySelector('#user-last-message') == null) {
           chat.querySelector('.last').insertAdjacentHTML('beforeend', '<p class="post-user" id="user-last-message"></p>')
         }
-        let currentUser = document.querySelector('#message_user_id').value
+        console.log(currentUser)
         if (data.current_user == currentUser) {
         chat.querySelector('#user-last-message').textContent = `You: ${data.message}`}
         else {
           chat.querySelector('#user-last-message').textContent = data.message
-          let count = chat.querySelector('messages-count')
+          let count = chat.querySelector('.messages-count')
           if (count == null) {
             return chat.querySelector('.last').insertAdjacentHTML('beforeend', "<div class='messages-count'>1</div>")}
           else {

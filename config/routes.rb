@@ -32,4 +32,5 @@ Rails.application.routes.draw do
   post 'messages_read', to: 'messages#update'
   get 'welcome', to: 'posts#welcome'
   get 'guest', to: 'users#create'
+  get 'current_user', to: 'users#current'
 end

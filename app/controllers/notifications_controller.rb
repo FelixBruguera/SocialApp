@@ -1,7 +1,7 @@
 class NotificationsController < ApplicationController
 
     def index
-        user = User.find(params[:id])
+        user = current_user
         @seen = user.notifications.where('seen': true).order('created_at DESC')
         @new = user.notifications.where('seen': false).order('created_at DESC')
     end

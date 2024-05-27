@@ -18,7 +18,7 @@
                 </p>
             </div>
             <div id='friend-request-options'>
-                <%= link_to friends_path(user_id: current_user.id, friend_id: sender.id), data: {turbo_method: :post}, remote: true do %>
+                <%= link_to friends_path(id: request.slug), data: {turbo_method: :post}, remote: true do %>
                     <button class='button is-success is-light is-small'>Accept</button>
                 <% end %>
                 <%= link_to friend_request_path(request, friend_request: {ignored: true}), data: {turbo_method: :put}, remote: true do %>

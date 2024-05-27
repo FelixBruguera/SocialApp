@@ -12,7 +12,7 @@
             </div>
             <% end %>
             <% if current_user.notifications.count > 7 %>
-                <%= link_to 'See all', notifications_path(id: current_user.id), id: 'see-notifications' %>
+                <%= link_to 'See all', notifications_path, id: 'see-notifications' %>
             <% end %>
         </div>
     </div>
