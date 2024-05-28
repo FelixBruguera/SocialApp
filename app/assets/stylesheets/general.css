@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
 :root {
     --logo: #23468c;
     --bg: #FEFBF3;
@@ -26,6 +28,7 @@ body {
     color: var(--logo);
     font-size: 2rem;
     font-weight: 800;
+    font-family: "Kanit", sans-serif;
 }
 #new_user {
     display: flex;
@@ -45,6 +48,7 @@ body {
     align-items: center;
 }
 #landing-left {
+    font-family: 'Kanit';
     color: var(--bg);
     font-weight: 800;
     z-index: 1;
@@ -146,7 +150,7 @@ turbo-frame > a {
     display: flex;
     /* grid-template: 1fr 6fr/ 1fr 3fr 1fr; */
     flex-direction: column;
-    background-color: var(--bg);
+    background-color: #f0f0f0;
     height: 100%;
     padding-top: 5%;
     gap: 30px;
@@ -309,6 +313,9 @@ turbo-frame > a {
     font-size: 1.2rem;
     font-weight: 800;
     color: var(--logo);
+}
+#link-icon:hover {
+    border: 1px solid #eaeaea
 }
 #link-icon > a {
     color: black;
@@ -994,19 +1001,23 @@ input.edit-form, div.edit-form, .edit-form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    background-color: #ededed;
+    /* background-color: #ededed; */
+    background-color: white;
     width: 35%;
+    overflow: scroll;
 }
 #chats-container {
-    padding: 10%;
-    height: 80%;
+    padding-top: 7%;
+    height: 100vh;
     display: flex;
     width: 100%;
 }
 #chat {
-    height: 100vh;
     width: 60%;
     background-color: #ededed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 #messages {
     display: flex;
@@ -1025,14 +1036,16 @@ input.edit-form, div.edit-form, .edit-form {
 }
 .chat-message {
     /* background-color: #006AFF; */
-    background-color: darkslateblue;
+    background-color: #2e2e2e;
     word-wrap: break-word;
+    margin-left: 6%;
 }
 .chat-message-user {
-    background-color: #2e2e2e;
+    background-color: #006AFF;
     border: 1px solid white;
     margin-left: auto;
     word-wrap: break-word;
+    margin-right: 6%;
     
 }
 .chat-date {
@@ -1061,13 +1074,16 @@ input.edit-form, div.edit-form, .edit-form {
 }
 #message-input {
     width: 80%;
+    height: 30px;
+    outline: none;
 }
 .chat-box {
     display: flex;
     align-items: center;
     gap: 10px;
     width: 100%;
-    padding: 5px;
+    padding: 15px 15px 15px 25px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .chat-friend {
     display: flex;
@@ -1078,7 +1094,7 @@ input.edit-form, div.edit-form, .edit-form {
     padding: 5px;
 }
 .chat-box:hover {
-    background-color: #e5e5e5;
+    background-color: rgba(0, 106, 255, 0.2);
 }
 .last {
     display: flex;
@@ -1140,4 +1156,21 @@ input.edit-form, div.edit-form, .edit-form {
     background-color: yellow;
     font-weight: 800;
     text-align: center;
+}
+#message-form {
+    padding-bottom: 4%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.chat-user {
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+}
+.chat-profile-pic {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    border: 1px solid rgba(0,0,0,0.2);
 }

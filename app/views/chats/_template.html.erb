@@ -6,11 +6,11 @@
             <% friend = chat.user %>
         <% end %>
         <%= link_to user_path(friend) do %>
-            <%= image_tag(friend.profile_picture, class: 'profile-pic') %>
+            <%= image_tag(friend.profile_picture, class: 'chat-profile-pic') %>
         <% end %>
         <div class="user-date">
         <%= link_to user_path(friend) do %>
-            <p class='post-user'><%= friend.first_name+' '+friend.last_name %></p>
+            <p class='chat-user'><%= friend.first_name+' '+friend.last_name %></p>
         <% end %>
         </div>
     </div>

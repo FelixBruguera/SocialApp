@@ -8,4 +8,7 @@ export default class extends Controller {
     this.buttonTarget.className == 'unliked' ? this.countTarget.textContent = likesCount+1 : this.countTarget.textContent = likesCount-1
     this.buttonTarget.classList.toggle('unliked')
   }
+  test() {
+    console.log('est')
+  }
 }
