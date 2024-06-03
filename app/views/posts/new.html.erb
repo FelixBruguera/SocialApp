@@ -8,7 +8,7 @@
         <div id="user-pic">
             <%= image_tag(current_user.profile_picture, class: 'profile-pic') %>
         </div>
-        <%= form_with model: @post, method: :post do |f| %>
+        <%= form_with model: @post, method: :post, id:'new-post-form' do |f| %>
             <% if params[:is_page] %>
                 <%= f.hidden_field :page_id, :value => params[:page] %>
             <% end %>
@@ -23,15 +23,13 @@
                 <% end %>
                 <% if post_type == 'new' %>
                     <div id='post-image-field'>
-                        <%= f.label :image do %>
-                        <i class='fas fa-images has-text-link is-small'></i>
-                            <%= f.file_field :image%>
-                        <% end %>
+                        <%= f.label :image, 'Browse image', class: 'button is-shadow is-small', id: 'file-button'%>
+                        <%= f.file_field :image, accept: 'jpg, png'%>
                     </div>
                 <% end %>
             </div>
             <% if post_type == 'shared' %>
-                <%= f.submit 'Share', class:'button is-link is-small'%>
+                <%= f.submit 'Share', class:'button is-link is-small', 'data-action': 'click->popover#close'%>
             <% else %>
                 <%= f.submit 'Send', class:'button is-link is-small'%>
             <% end %>

@@ -71,17 +71,27 @@ class PostsController < ApplicationController
 
     def resize
         if params[:post][:image].present?
+            acceptable_formats = ['image/jpg', 'image/png','image/jpeg']
             tempo = resize_before_save(params[:post][:image], 810, 500)
-            params[:post][:image] = ActionDispatch::Http::UploadedFile.new(
-                tempfile: tempo,
-                filename: tempo.path,
-                type: 'image/jpeg'
-            )
+            if acceptable_formats.include?(params[:post][:image].content_type) && tempo != 'bad format'
+                  params[:post][:image] = ActionDispatch::Http::UploadedFile.new(
+                    tempfile: tempo,
+                    filename: tempo.path,
+                    type: 'image/jpeg'
+                )
+            else
+                respond_to do |format|
+                    format.turbo_stream do
+                        render turbo_stream: turbo_stream.prepend("feed", partial: 'posts/errors',
+                        locals: {errors: ['File extension has to be jpg or png']})
+                    end
+                end
+            end
         end
     end
 
     def post_params
-        params.require(:post).permit(:body, :image, :shared_post, :uuid, :page_id, :user_id)
+        params.require(:post).permit(:body, :image, :shared_post, :uuid, :page_id)
     end
 
     def post_params_edited

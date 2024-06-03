@@ -3,4 +3,5 @@
     <script href='application.js' defer></script>
 </head>
     <%= render partial:'layouts/hero', locals: {'status': 'feed'}%>
+    <div></div>
     <%= render partial:'post', locals: {post: Post.friendly.find(params[:id]), location: 'post'} %>

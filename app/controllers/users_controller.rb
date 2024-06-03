@@ -90,20 +90,44 @@ class UsersController < ApplicationController
 
     def resize
         if params[:user][:profile_picture].present?
+            acceptable_formats = ['image/jpg', 'image/png','image/jpeg']
             tempo = resize_before_save(params[:user][:profile_picture], 120, 120)
+            if acceptable_formats.include?(params[:user][:profile_picture].content_type) && tempo != 'bad format'
             params[:user][:profile_picture] = ActionDispatch::Http::UploadedFile.new(
                 tempfile: tempo,
                 filename: tempo.path,
                 type: 'image/jpeg'
             )
+            else
+                flash[:errors] = ['File extension has to be jpg or png']
+                redirect_to current_user
+                # respond_to do |format|
+                #     format.html do
+                #         render partial: 'posts/errors',
+                #         locals: {errors: ['File extension has to be jpg or png']}
+                #     end
+                # end
+            end
         end
         if params[:user][:cover_picture].present?
+            acceptable_formats = ['image/jpg', 'image/png','image/jpeg']
             tempo = resize_before_save(params[:user][:cover_picture], 1100, nil)
+            if acceptable_formats.include?(params[:user][:cover_picture].content_type) && tempo != 'bad format'
             params[:user][:cover_picture] = ActionDispatch::Http::UploadedFile.new(
                 tempfile: tempo,
                 filename: tempo.path,
                 type: 'image/jpeg'
             )
+            else
+                flash[:errors] = ['File extension has to be jpg or png']
+                redirect_to current_user
+                # respond_to do |format|
+                #     format.html do
+                #         render partial: 'posts/errors',
+                #         locals: {errors: ['File extension has to be jpg or png']}
+                #     end
+                # end
+            end
         end
     end
 end

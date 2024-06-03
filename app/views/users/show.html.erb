@@ -3,7 +3,7 @@
 </head>
 <%= render partial:'layouts/hero', locals: {'status': 'feed'}%>
 <% if flash[:errors]%>
-    <div id="error-div">
+    <div id="error-div-profile">
         <% flash[:errors].each do |err|%>
             <%= err%>
         <% end %>
@@ -12,13 +12,17 @@
 <% if @user == current_user %>
     <%= form_with model: @user, data: {controller: 'editprofile', turbo: false}, id:'profile-pictures', method: :patch do |f| %>
     <div id="cover-form">
-        <%= f.file_field :cover_picture, class: 'edit-form', data: {'editprofile-target': 'cover'}%></div>
+        <button type='button' class='edit-form' data-editprofile-target='coverLabel'>
+            <%= f.file_field :cover_picture, class: 'edit-form', data: {'editprofile-target': 'cover'}%></div>
+        </button>
         <%= image_tag(@user.cover_picture, class: 'cover-pic') %>
     <div id='profile-info'>
         <div id="info-pic-button">
             <div id="profile-user-pic">
                 <div id="pfp-form">
-                    <%= f.file_field :profile_picture, class: 'edit-form', id: 'pfp-input',  data: {'editprofile-target': 'profile'}%>
+                    <button type='button' class='edit-form' data-editprofile-target='profileLabel'>
+                        <%= f.file_field :profile_picture, class: 'edit-form', id: 'pfp-input',  data: {'editprofile-target': 'profile'}%>
+                    </button>
                 </div>
                 <%= image_tag(@user.profile_picture, id: 'user-profile-pic') %>
             </div>
@@ -118,10 +122,11 @@
                     <p class='small-text' data-truncate-target='seeMore' data-action='click->truncate#more' data-editprofile-target='seeMore'>See more</p>
                 </div>
         </div>
-        <div id='profile-user-photos'>
-            <% if is_friend?(@user, current_user) || @user == current_user %>
-                <p class='profile-title'>Pictures</p>
-                <div id='photo-box'>
+        <% if is_friend?(@user, current_user) || @user == current_user %>
+            <% unless @photos.nil? %>
+                <div id='profile-user-photos'>
+                    <p class='profile-title'>Pictures</p>
+                    <div id='photo-box'>
                     <% @photos.each do |photo|%>
                         <%= link_to post_path(photo) do %>
                             <%= image_tag(photo.image, class: 'photo') %>
@@ -130,6 +135,7 @@
                 </div>
             <% end %>
         </div>
+        <% end %>
     </div>
     <div id="profile-content">
     <% if @user == current_user %>

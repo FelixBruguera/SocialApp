@@ -37,10 +37,17 @@
                 <%= render partial: 'notifications/notification_bar', locals: {user: current_user} %>
             </span>
         </div>
-            <%= link_to destroy_user_session_path, data: { turbo_method: :delete } do %>
-            <span class="icon is-medium is-left">
-                <i class="fas fa-door-open"></i>
-            </span>
-            <% end %>
+            <div id= 'nav' data-controller='nav'>
+                <%= image_tag(current_user.profile_picture, class: 'hero-profile-pic', data: {'nav-target': 'pic', action: 'click->nav#display'}) %>
+                <div class='hidden' data-nav-target='menu'>
+                    <%= link_to 'Profile', user_path(current_user), class: 'menu-text'%>
+                    <%= link_to 'User list', users_path, class: 'menu-text'%>
+                    <% unless current_user.pages.empty? %>
+                        <%= link_to 'Pages', pages_path, class: 'menu-text'%>
+                    <% end %>
+                    <%= link_to 'Log out', destroy_user_session_path, data: { turbo_method: :delete }, class: 'menu-text'%>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

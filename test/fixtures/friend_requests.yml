@@ -4,8 +4,17 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+one: 
+  id: 1
+  sender: 1
+  receiver: 2
+  ignored: false
+  slug: randomuuid123
 # column: value
 #
-two: {}
+# two:
+#   id: 2
+#   sender: 1
+#   receiver: 3
+#   ignored: false
 # column: value

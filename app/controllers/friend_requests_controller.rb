@@ -20,8 +20,8 @@ class FriendRequestsController < ApplicationController
     end
 
     def update
-        @friend_request = FriendRequest.find(request_id(params[:id]))
-        @friend_request.update(update_params)
+        @friend_request = FriendRequest.friendly.find(params[:id])
+        @friend_request.update(ignored: true)
     end
 
     def destroy
