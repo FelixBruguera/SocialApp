@@ -635,14 +635,6 @@ div[id*='share-post-']::backdrop {
     position: relative;
     margin-left: 5vw;
 }
-.user-profile-pic {
-    height: 120px;
-    width: 120px;
-    border-radius: 100px;
-    border: 1px solid rgba(0,0,0,0.2);
-    position: relative;
-    margin-left: 5vw;
-}
 #profile-pictures {
     margin-left: auto;
     margin-right: auto;

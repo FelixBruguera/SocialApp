@@ -18,4 +18,13 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_acceptable, 'it should not create the comment'
   end
 
+  test 'rendering a comment' do
+    login_as User.first
+    User.first.update(profile_picture: File.open('test/fixtures/files/pfp.jpg'))
+    get post_path(Post.first.slug)
+    assert_select '.comment', {:minimum=> 1}
+    assert_select '.comment-user', User.first.first_name+' '+User.first.last_name
+    assert_select '.comment>.user-pic>.user-date>p', 'Testing'
+  end
+
 end

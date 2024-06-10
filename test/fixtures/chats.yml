@@ -7,7 +7,9 @@
 one: 
   id: 1
   user_id: 1
-  friend_id: 2
+  friend_id: 3
+  uuid: 'randomchat123'
+  slug: 'randomchat123'
 # column: value
 #
 two: {}

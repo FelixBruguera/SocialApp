@@ -21,12 +21,14 @@ class FriendRequestsController < ApplicationController
 
     def update
         @friend_request = FriendRequest.friendly.find(params[:id])
-        @friend_request.update(ignored: true)
+        if current_user.id == @friend_request.receiver.to_i
+            @friend_request.update(ignored: true)
+        end
     end
 
     def destroy
-        @friend_request = FriendRequest.find(params[:id])
-        @friend_request.destroy
+        friend_request = FriendRequest.find(params[:id])
+        friend_request.destroy
     end
 
     private

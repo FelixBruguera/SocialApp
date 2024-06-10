@@ -85,3 +85,7 @@ gem 'figaro'
 
 
 gem "aws-sdk-s3", "~> 1.151"
+
+gem "sidekiq", "~> 7.2"
+
+gem "delayed_job_active_record"

@@ -30,7 +30,7 @@ class PostsController < ApplicationController
     def create
         @post = Post.new(post_params_edited)
         unless @post.user == current_user || @post.page.user == current_user
-            return render root_path, status: :unprocessable_entity
+            return render posts_path, status: :unprocessable_entity
         end
         if @post.save
             unless @post.shared_post.nil?

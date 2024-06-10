@@ -20,3 +20,9 @@ two:
   uuid: randomuuid12345
   slug: randomuuid12345
 # column: value
+test: 
+  id: 3
+  user_id: 3
+  body: 'testing another post'
+  uuid: randomuuid12345678
+  slug: randomuuid12345678

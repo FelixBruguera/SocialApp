@@ -16,14 +16,25 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
+    if current_user.is_guest
+      guest_cleanup(current_user)
+      current_user.destroy
+      return redirect_to root_path
+    end
     super
     flash.discard(:notice)
   end
 
-  # protected
+  protected
 
   def after_sign_in_path_for(resource)
     posts_path
+  end
+
+  def guest_cleanup(user)
+    user.profile_picture_attachment.purge
+    user.cover_picture_attachment.purge
+    user.posts.joins(:image_attachment).each {|post| post.image_attachment.purge}
   end
 
   # If you have extra params to permit, append them to the sanitizer.

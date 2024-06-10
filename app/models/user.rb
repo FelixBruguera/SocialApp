@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :omniauthable, omniauth_providers: [:google_oauth2]
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :timeoutable
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :reactions, dependent: :destroy
@@ -41,6 +41,20 @@ class User < ApplicationRecord
         )
     end
     user
+  end
+
+  def self.destroy
+    if self.is_guest
+      guest_cleanup(self)
+      self.destroy
+      return redirect_to root_path
+    end
+  end
+
+  def guest_cleanup(user)
+    user.profile_picture_attachment.purge
+    user.cover_picture_attachment.purge
+    user.posts.joins(:image_attachment).each {|post| post.image_attachment.purge}
   end
 
 end

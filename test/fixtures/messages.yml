@@ -11,5 +11,9 @@ one:
   body: 'Test'
 # column: value
 #
-two: {}
+two: 
+  id: 2
+  user_id: 3
+  chat_id: 1
+  body: 'Test 2'
 # column: value

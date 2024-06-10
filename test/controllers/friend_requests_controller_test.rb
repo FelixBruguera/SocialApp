@@ -13,8 +13,10 @@ class FriendRequestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'ignoring a request' do
+    login_as User.find(2)
     friend_request = FriendRequest.first
     put friend_request_path(friend_request.slug, friend_request: {ignored: true})
     assert FriendRequest.first.ignored == true, 'it should update the request'
   end
+  
 end

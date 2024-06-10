@@ -11,7 +11,12 @@ one:
   email: 'pedro@perez.com'
   encrypted_password: '123456'
   username: 'Pedro-Perez-1234'
-  uuid: SecureRandom.uuid
+  uuid: randomuuid123
+  slug: 'Pedro-Perez-1234'
+  bio: Im a test user
+  location: Germany
+  birthday: '1985-05-03'
+
 # column: value
 #
 two:
@@ -21,13 +26,28 @@ two:
   email: 'car@mar.com'
   encrypted_password: '123456'
   username: 'Carlos-Martinez-1234'
-  uuid: SecureRandom.uuid
+  uuid: randomuuid12345
+  slug: 'Carlos-Martinez-1234'
+  bio: Im another test user
+  location: Colombia
+  birthday: '2001-08-15'
 # column: value
-# test:
-#   id: 3
-#   first_name: 'Test'
-#   last_name: 'User'
-#   email: 't@u.com'
-#   encrypted_password: '123456'
-#   username: 'Test-User-1234'
-#   uuid: SecureRandom.uuid
+test:
+  id: 3
+  first_name: 'Test'
+  last_name: 'User'
+  email: 't@u.com'
+  encrypted_password: '123456'
+  username: 'Test-User-1234'
+  uuid: SecureRandom.uuid
+  slug: 'Test-User-1234'
+guest: 
+  id: 4
+  first_name: 'Guest'
+  last_name: '12345'
+  email: 'guest@number.com'
+  encrypted_password: '123456'
+  username: 'Guest-1234'
+  uuid: SecureRandom.uuid
+  slug: 'Guest-1234'
+  is_guest: true

@@ -16,10 +16,11 @@ class FriendsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'unfriend' do
+    login_as User.first
     friendship = Friend.first
     delete friend_path(friendship.slug)
-    assert Friend.where(user_id: 1).and(Friend.where(friend_id: 5)).first.nil?, 'it should destroy the friendship'
-    assert Friend.where(user_id: 5).and(Friend.where(friend_id: 1)).first.nil?, 'it should destroy the reverse friendship'
+    assert Friend.where(user_id: 1).and(Friend.where(friend_id: 3)).first.nil?, 'it should destroy the friendship'
+    assert Friend.where(user_id: 3).and(Friend.where(friend_id: 1)).first.nil?, 'it should destroy the reverse friendship'
 
   end
 end

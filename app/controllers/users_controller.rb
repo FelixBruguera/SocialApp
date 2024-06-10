@@ -5,6 +5,7 @@ class UsersController < ApplicationController
     include FriendsHelper
 
     before_action :resize, only: [:update]
+    skip_before_action :authenticate_user!, only: [:create]
 
     def index
         @users = User.all.where(is_guest: nil)
@@ -24,6 +25,9 @@ class UsersController < ApplicationController
         if @user.save
             sign_in @user
             redirect_to welcome_path
+            if @user.is_guest
+                @user.delay(run_at: 6.hours.from_now).destroy
+            end
         else
             p @user.errors.full_messages
         end
@@ -67,7 +71,11 @@ class UsersController < ApplicationController
     end
 
     def current
-        render json: {user: current_user.slug}
+        if current_user
+            render json: {user: current_user.slug}
+        else
+            redirect_to posts_path, status: :unprocessable_entity
+        end
     end
 
     private
@@ -101,12 +109,6 @@ class UsersController < ApplicationController
             else
                 flash[:errors] = ['File extension has to be jpg or png']
                 redirect_to current_user
-                # respond_to do |format|
-                #     format.html do
-                #         render partial: 'posts/errors',
-                #         locals: {errors: ['File extension has to be jpg or png']}
-                #     end
-                # end
             end
         end
         if params[:user][:cover_picture].present?
@@ -121,13 +123,8 @@ class UsersController < ApplicationController
             else
                 flash[:errors] = ['File extension has to be jpg or png']
                 redirect_to current_user
-                # respond_to do |format|
-                #     format.html do
-                #         render partial: 'posts/errors',
-                #         locals: {errors: ['File extension has to be jpg or png']}
-                #     end
-                # end
             end
         end
     end
+
 end

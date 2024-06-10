@@ -64,7 +64,7 @@
         <div id='profile-info'>
             <div id="info-pic-button">
                 <div id="profile-user-pic">
-                    <%= image_tag(@user.profile_picture, class: 'user-profile-pic') %>
+                    <%= image_tag(@user.profile_picture, id: 'user-profile-pic') %>
                 </div>
                 <div id="info-loc-age">
                     <p id='profile-name'><%= @user.first_name+' '+@user.last_name%></p>
