@@ -78,6 +78,10 @@ class UsersController < ApplicationController
         end
     end
 
+    def destroy
+        p 'USER DESTROY'
+    end
+
     private
 
     def user_params

@@ -12,10 +12,10 @@ class User < ApplicationRecord
   has_many :reverse_friends, class_name: 'Friend', foreign_key: 'friend_id', dependent: :destroy
   has_many :friend_requests, foreign_key: :receiver, dependent: :destroy
   has_many :friend_requests_sent, foreign_key: :sender, class_name: 'FriendRequest', dependent: :destroy
-  has_one_attached :profile_picture, dependent: :destroy
+  has_one_attached :profile_picture
   has_many :sent_notifications, class_name: 'Notification', foreign_key: 'sender', dependent: :destroy
   has_many :notifications, class_name: 'Notification', foreign_key: 'receiver', dependent: :destroy
-  has_one_attached :cover_picture, dependent: :destroy
+  has_one_attached :cover_picture
   friendly_id :username, use: :slugged
   has_many :chats, dependent: :destroy
   has_many :chats_friend, class_name: 'Chat', foreign_key: 'friend_id', dependent: :destroy
@@ -45,16 +45,15 @@ class User < ApplicationRecord
 
   def self.destroy
     if self.is_guest
-      guest_cleanup(self)
+      self.guest_cleanup
       self.destroy
-      return redirect_to root_path
     end
   end
 
-  def guest_cleanup(user)
-    user.profile_picture_attachment.purge
-    user.cover_picture_attachment.purge
-    user.posts.joins(:image_attachment).each {|post| post.image_attachment.purge}
+  def self.guest_cleanup
+    self.profile_picture_attachment.purge
+    self.cover_picture_attachment.purge
+    self.posts.joins(:image_attachment).each {|post| post.image_attachment.purge}
   end
 
 end

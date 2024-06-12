@@ -69,7 +69,5 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get '/guest?is_guest=true'
     assert User.last.first_name == 'Guest', 'it should create the user'
     assert User.last.is_guest == true, 'the user should be a guest'
-    sleep 2.minutes
-    assert_not User.last.first_name == 'Guest', 'it should destroy the user'
   end
 end

@@ -179,6 +179,8 @@ turbo-frame > a {
     justify-content: space-between;
     background-color: white;
     margin: 2% auto auto auto;
+    box-shadow: 3px 2px 5px #00000075;
+    border-radius: 5px
 }
 .post-feed {
     display: flex;
@@ -191,7 +193,8 @@ turbo-frame > a {
     align-items: baseline;
     justify-content: space-between;
     background-color: white;
-    box-shadow: 3px 2px 5px #00000075
+    box-shadow: 3px 2px 5px #00000075;
+    border-radius: 5px
 }
 .post-user {
     grid-area: 1 / 1;
@@ -939,6 +942,11 @@ input.edit-form, div.edit-form, .edit-form {
     width: 50%;
     display: flex;
     border-bottom: 1px solid rgba(255,255,255,0.2);
+    background-color: rgba(62, 82, 99,0.2);
+    border-radius: 15px;
+}
+.user-card:hover {
+    background-color: rgba(62, 82, 99,0.5);
 }
 .index-profile-pic {    
     height: 80px;
@@ -967,6 +975,7 @@ input.edit-form, div.edit-form, .edit-form {
     border-radius: 15px;
     width: 50%;
     border-bottom: 1px solid rgba(0,0,0,0.1);
+    background-color: var(--comment-bg);
 }
 .friendrequest-index {
     display: grid;
@@ -1243,4 +1252,8 @@ input[type=file]::file-selector-button {
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 5px;
     text-align: center;
+}
+.index-link {
+    display: flex;
+    justify-content: center;
 }
