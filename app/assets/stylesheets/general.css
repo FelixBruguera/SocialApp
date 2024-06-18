@@ -196,6 +196,9 @@ turbo-frame > a {
     box-shadow: 3px 2px 5px #00000075;
     border-radius: 5px
 }
+.post-feed:hover {
+    border: 1px solid rgba(0,0,0,0.3);
+}
 .post-user {
     grid-area: 1 / 1;
     color: black;

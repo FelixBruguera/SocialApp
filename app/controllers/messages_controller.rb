@@ -13,9 +13,7 @@ class MessagesController < ApplicationController
     end
 
     def create
-        data = message_params
-        data[:user_id] = current_user.id
-        data[:chat_id] = Chat.friendly.find(data[:chat_id]).id
+        data = message_params_full
         id = data[:chat_id]
         chat = Chat.find(id)
         check_date = chat.messages.filter {|mes| mes.created_at.strftime("%D") == DateTime.now.strftime('%D')}
@@ -25,10 +23,10 @@ class MessagesController < ApplicationController
         end
         @message = Message.create(data)
             ActionCable.server.broadcast("ChatsChannel", {
-        message: @message.body,
-        chat_id: @message.chat.slug,
-        current_user: current_user.slug,
-        date: @message.created_at.strftime("%R")})
+                message: @message.body,
+                chat_id: @message.chat.slug,
+                current_user: current_user.slug,
+                date: @message.created_at.strftime("%R")})
     end
 
     def show
@@ -42,7 +40,7 @@ class MessagesController < ApplicationController
     end
 
     def update
-        data = update_params
+        data = update_params_full
         messages = get_unseen(data[:chat_id], current_user.id)
         unless messages.nil?
             messages.each {|mes| mes.update(seen: true)}
@@ -55,9 +53,21 @@ class MessagesController < ApplicationController
         params.require(:message).permit(:chat_id, :body, :seen)
     end
 
+    def message_params_full
+        data = message_params
+        data[:user_id] = current_user.id
+        data[:chat_id] = Chat.friendly.find(data[:chat_id]).id
+        data
+    end
+
     def update_params
-        params.permit(:chat_id, :message)
-        {chat_id: chat_id(params[:chat_id])}
+        params.permit(:chat_id)
+    end
+
+    def update_params_full
+      data = update_params
+      data[:chat_id] = Chat.friendly.find(data[:chat_id]).id
+      data
     end
 
 end

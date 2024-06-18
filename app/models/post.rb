@@ -8,5 +8,5 @@ class Post < ApplicationRecord
     has_many :notifications, dependent: :destroy
     friendly_id :uuid, use: :slugged
     belongs_to :page, optional: true
-    validates :body, presence: {message: "can't be blank"}
+    validates :body, presence: {message: "Can't be blank"}
 end

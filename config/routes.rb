@@ -13,7 +13,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "application#index"
-  #get '/friends?:user_id, :friend_id', to: 'friends#destroy'
   resources :users, except: [:show]
   resources :friends
   get 'users/:username', to: 'users#show'

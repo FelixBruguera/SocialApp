@@ -28,7 +28,7 @@ class PostsController < ApplicationController
     end
 
     def create
-        @post = Post.new(post_params_edited)
+        @post = Post.new(post_params_full)
         unless @post.user == current_user || @post.page.user == current_user
             return render posts_path, status: :unprocessable_entity
         end
@@ -59,14 +59,6 @@ class PostsController < ApplicationController
         end
     end
 
-    def update
-        @post = Post.friendly.find(params[:id])
-        if @post.update(update_params)
-        else
-            render @post, status: :unprocessable_entity
-        end
-    end
-
     private
 
     def resize
@@ -94,7 +86,7 @@ class PostsController < ApplicationController
         params.require(:post).permit(:body, :image, :shared_post, :uuid, :page_id)
     end
 
-    def post_params_edited
+    def post_params_full
         data = post_params
         if data[:page_id].present?
             data[:page_id] = Page.friendly.find(data[:page_id]).id
@@ -106,9 +98,5 @@ class PostsController < ApplicationController
             data[:shared_post] = Post.friendly.find(data[:shared_post]).id
         end
         data
-    end
-
-    def update_params
-        params.require(:post).permit(:image)
     end
 end

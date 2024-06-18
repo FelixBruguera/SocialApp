@@ -3,40 +3,40 @@
 </head>
 
 <div class=<%= location == 'feed' ? 'post-feed' : 'post'%>>
-                <% if post.page_id %>
-                    <div class="user-pic">
-                        <%= link_to page_path(post.page_id) do %>
-                            <%= image_tag(post.page.profile_picture, class: 'profile-pic') %>
-                        <% end %>
-                        <div class="user-date">
-                            <%= link_to page_path(post.page_id) do %>
-                                <p class='post-user'><%= post.page.name%></p>
-                            <% end %>
-                            <p class='post-date'><%= post.created_at.strftime('%D at %R') %></p>
-                        </div>
-                    </div>
-                <% else %>
-                    <div class="user-pic">
-                        <%= link_to user_path(post.user) do %>
-                        <%= image_tag(post.user.profile_picture, class: 'profile-pic') %>
-                        <% end %>
-                        <div class="user-date">
-                            <%= link_to user_path(post.user) do %>
-                                <p class='post-user'><%= post.user.first_name+' '+post.user.last_name %></p>
-                            <% end %>
-                            <p class='post-date'><%= post.created_at.strftime('%D at %R') %></p>
-                        </div>
-                    </div>
-                <% end %>
-            <%= link_to post_path(post), class: 'link-post' do %>
-                <p class='post-body'><%= post.body %></p>
-                <% if post.image.attached? %>
-                    <%= image_tag(post.image, class: 'post-pic') %>
-                <% end %>
+    <% if post.page_id %>
+        <div class="user-pic">
+            <%= link_to page_path(post.page_id) do %>
+                <%= image_tag(post.page.profile_picture, class: 'profile-pic') %>
             <% end %>
-            <% unless post.shared_post.nil? %>
-                <%= render partial:'posts/shared_post', locals: {'post': Post.friendly.find(post.shared_post), is_page: Post.friendly.find(post.shared_post).page_id}%>
+            <div class="user-date">
+                <%= link_to page_path(post.page_id) do %>
+                    <p class='post-user'><%= post.page.name%></p>
+                <% end %>
+                <p class='post-date'><%= post.created_at.strftime('%D at %R') %></p>
+            </div>
+        </div>
+    <% else %>
+        <div class="user-pic">
+            <%= link_to user_path(post.user) do %>
+            <%= image_tag(post.user.profile_picture, class: 'profile-pic') %>
             <% end %>
+            <div class="user-date">
+                <%= link_to user_path(post.user) do %>
+                    <p class='post-user'><%= post.user.first_name+' '+post.user.last_name %></p>
+                <% end %>
+                <p class='post-date'><%= post.created_at.strftime('%D at %R') %></p>
+            </div>
+        </div>
+    <% end %>
+    <%= link_to post_path(post), class: 'link-post' do %>
+        <p class='post-body'><%= post.body %></p>
+        <% if post.image.attached? %>
+            <%= image_tag(post.image, class: 'post-pic') %>
+        <% end %>
+    <% end %>
+    <% unless post.shared_post.nil? %>
+        <%= render partial:'posts/shared_post', locals: {'post': Post.friendly.find(post.shared_post), is_page: Post.friendly.find(post.shared_post).page_id}%>
+    <% end %>
     <div class="post-lower">
         <div class="post-info">
             <span class="icon-text is-small is-centered has-text-link" id='reactions' data-controller='likes'>

@@ -7,18 +7,14 @@ class ReactionsController < ApplicationController
     end
 
     def create
-        data = reaction_params
-        data[:user_id] = current_user.id
-        data[:post_id] = Post.friendly.find(data[:post_id]).id
-        data[:reaction] = 'like'
-        @reaction = Reaction.new(data)
+        @reaction = Reaction.new(reaction_params_full)
         if @reaction.save
             poster = @reaction.post.user
             unless poster == @reaction.user
-                Notification.create(sender:@reaction.user, receiver: poster, post_id: data[:post_id], action: 'liked')
+                Notification.create(sender:@reaction.user, receiver: poster, post_id: @reaction[:post_id], action: 'liked')
             end
         else
-            Reaction.destroy(Reaction.where(user_id: data[:user_id], post_id: data[:post_id]))
+            Reaction.destroy(Reaction.where(user_id: @reaction[:user_id], post_id: @reaction[:post_id]))
         end
     end
 
@@ -26,5 +22,13 @@ class ReactionsController < ApplicationController
 
     def reaction_params
         params.permit(:post_id)
+    end
+
+    def reaction_params_full
+        data = reaction_params
+        data[:user_id] = current_user.id
+        data[:post_id] = Post.friendly.find(data[:post_id]).id
+        data[:reaction] = 'like'
+        data
     end
 end

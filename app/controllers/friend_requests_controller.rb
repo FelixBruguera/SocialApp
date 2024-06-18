@@ -12,7 +12,7 @@ class FriendRequestsController < ApplicationController
     end
 
     def create
-        data = friend_request_params_edited
+        data = friend_request_params_full
         if data[:sender] == current_user.id
             @friend_request = FriendRequest.create(data)
             head :ok
@@ -37,7 +37,7 @@ class FriendRequestsController < ApplicationController
         params.permit(:receiver)
     end
 
-    def friend_request_params_edited
+    def friend_request_params_full
         data = friend_request_params
         data[:sender] =  current_user.id
         data[:receiver] = User.friendly.find(data[:receiver]).id

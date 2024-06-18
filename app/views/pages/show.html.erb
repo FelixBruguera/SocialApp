@@ -45,12 +45,12 @@
                     <%= render partial:'posts/post', locals: {post: post, location: 'feed'}%>
                 <% end %>
             </div>
-            <% # unless @posts.next_page.nil? %>
-            <div class='load-posts-profile' data-controller='pagination'>
-                <span class='hidden' data-pagination-target='maxPages'><%= @posts %></span>
-                <%= link_to 'Load more', "/pages/#{@page.slug}?page=1", remote: true, data: {turbo_method: :post, 'pagination-target': :link, action: 'click->pagination#update'}%>
-            </div>
-            <%# end %>
+            <% unless @posts.next_page.nil? %>
+                <div class='load-posts-profile' data-controller='pagination'>
+                    <span class='hidden' data-pagination-target='maxPages'><%= @posts %></span>
+                    <%= link_to 'Load more', "/pages/#{@page.slug}?page=1", remote: true, data: {turbo_method: :post, 'pagination-target': :link, action: 'click->pagination#update'}%>
+                </div>
+            <%end %>
         </div>
     </div>
 </div>

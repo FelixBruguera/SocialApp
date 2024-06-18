@@ -54,7 +54,6 @@ class UsersController < ApplicationController
     def update
         @user = User.friendly.find(params[:id])
         if @user == current_user
-            p update_params
             if update_params[:profile_picture].present?
                 @user.profile_picture_attachment.purge
             end
@@ -76,10 +75,6 @@ class UsersController < ApplicationController
         else
             redirect_to posts_path, status: :unprocessable_entity
         end
-    end
-
-    def destroy
-        p 'USER DESTROY'
     end
 
     private

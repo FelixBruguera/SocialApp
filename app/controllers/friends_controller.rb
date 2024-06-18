@@ -8,7 +8,7 @@ class FriendsController < ApplicationController
     end
 
     def create
-        users = friend_params_edited
+        users = friend_params_full
         @friendship = Friend.new(users.except(:id))
         if @friendship.save
             request = FriendRequest.friendly.find(users[:id]).id
@@ -32,7 +32,7 @@ class FriendsController < ApplicationController
         params.permit(:id)
     end
 
-    def friend_params_edited
+    def friend_params_full
         data = friends_params
         data[:user_id] = User.find(FriendRequest.friendly.find(data[:id]).sender).id
         data[:friend_id] = User.find(FriendRequest.friendly.find(data[:id]).receiver).id
