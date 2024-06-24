@@ -7,5 +7,6 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-Page.create(name: 'SocialApp', description: 'Everything about SocialApp', uuid: SecureRandom.uuid, user_id: 23,
-            profile_picture: File.open('app/assets/images/page_pfp.png'), cover_picture: File.open('app/assets/images/cover_default.jpg'))
+
+#Page.create(name: 'SocialApp', description: 'Everything about SocialApp', uuid: SecureRandom.uuid, user_id: 1,
+#            profile_picture: File.open('app/assets/images/page_pfp.png'), cover_picture: File.open('app/assets/images/cover_default.jpg'))

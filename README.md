@@ -1,24 +1,35 @@
-# README
+# SocialApp
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A facebook-like social media site built with Ruby on Rails, this project is part of The Odin Project's curriculum: https://www.theodinproject.com/lessons/ruby-on-rails-rails-final-project
 
-Things you may want to cover:
+# Features:
 
-* Ruby version
+* Posts, comments, likes, and post sharing
 
-* System dependencies
+* Friendship, friend requests, notifications
 
-* Configuration
+* Customizable profiles, with profile and cover pictures
 
-* Database creation
+* Chat
 
-* Database initialization
+* Omniauth login with google and guest login
 
-* How to run the test suite
+# Things i learned:
 
-* Services (job queues, cache servers, search engines, etc.)
+During the development of this project, i gained experience in:
 
-* Deployment instructions
+* Model associations with multiple models
 
-* ...
+* Using Stimulus controllers
+
+* Adding UUIDs to each model and using the 'friendly_id' gem to find them
+
+* Resizing images with MiniMagick
+
+* Hosting images on Amazon S3
+
+* Using Bulma for icons and buttons
+
+* Implementing Omniauth with Google
+
+* Scheduling guests account deletion with the 'delayed_jobs' gem

@@ -11,7 +11,7 @@ import consumer from "channels/consumer"
       received(data) {
         function getUser() {
           const request = new XMLHttpRequest()
-          request.open("GET",'/current_user', false);
+          request.open("GET",'https://socialapp-x98o.onrender.com/current_user', false);
           request.send();
           return JSON.parse(request.response)['user']
         }
