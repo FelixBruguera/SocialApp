@@ -16,8 +16,12 @@ class CommentsController < ApplicationController
                         Notification.create(sender:@comment.user, receiver: poster, post_id: @comment.post.id, action: 'commented')
                     end
                     format.turbo_stream do
-                        render turbo_stream: turbo_stream.append("comments_#{@comment.post.slug}", partial: "comments/comment",
-                            locals: { comment: @comment })
+                        render turbo_stream: [turbo_stream.append("comments_#{@comment.post.slug}",
+                                            partial: "comments/comment", locals: { comment: @comment }),
+                                            turbo_stream.replace("comment-count-#{@comment.post.slug}",
+                                            partial: 'comments/count', locals: {comment: @comment}),
+                                            turbo_stream.replace("comment_body_#{@comment.post.slug}",
+                                            partial:'comments/empty_comment', locals: {post: @comment.post.slug})]
                     end
                 else
                     format.turbo_stream do

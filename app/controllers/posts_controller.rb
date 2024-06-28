@@ -33,19 +33,28 @@ class PostsController < ApplicationController
             return render posts_path, status: :unprocessable_entity
         end
         if @post.save
-            unless @post.shared_post.nil?
-                poster = Post.find(@post.shared_post).user
+            if @post.shared_post.present?
+                poster = @post.shared_post.user
                 unless poster == @post.user
-                    Notification.create(sender:@post.user, receiver: poster, post_id: @post.shared_post, action: 'shared')
+                    Notification.create(sender:@post.user, receiver: poster, post_id: @post.shared_post.id, action: 'shared')
                 end
             end
             respond_to do |format|
                 format.turbo_stream do
+                    if @post.shared_post.present?
                     render turbo_stream: [
                         turbo_stream.prepend("posts", partial: "posts/post",
                         locals: { post: @post, location: 'feed', is_page: @post.page_id}),
-                        turbo_stream.remove('error-div')
-                    ]
+                        turbo_stream.remove('error-div'),
+                        turbo_stream.replace("shares-count-#{@post.shared_post.slug}",
+                        partial: 'posts/shares_count', locals: {post: @post.shared_post})]
+                    else
+                        render turbo_stream: [
+                            turbo_stream.prepend("posts", partial: "posts/post",
+                            locals: { post: @post, location: 'feed', is_page: @post.page_id}),
+                            turbo_stream.remove('error-div'),
+                            turbo_stream.replace('text-field', partial:'posts/empty_input')]
+                    end
                 end
                 format.html
             end
@@ -95,7 +104,7 @@ class PostsController < ApplicationController
         end
         data[:uuid] = SecureRandom.uuid
         unless data[:shared_post].nil?
-            data[:shared_post] = Post.friendly.find(data[:shared_post]).id
+            data[:shared_post] = Post.friendly.find(data[:shared_post])
         end
         data
     end

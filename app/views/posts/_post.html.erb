@@ -34,8 +34,8 @@
             <%= image_tag(post.image, class: 'post-pic') %>
         <% end %>
     <% end %>
-    <% unless post.shared_post.nil? %>
-        <%= render partial:'posts/shared_post', locals: {'post': Post.friendly.find(post.shared_post), is_page: Post.friendly.find(post.shared_post).page_id}%>
+    <% if post.shared_post.present? %>
+        <%= render partial:'posts/shared_post', locals: {'post': post.shared_post, is_page: post.shared_post.page_id}%>
     <% end %>
     <div class="post-lower">
         <div class="post-info">
@@ -52,11 +52,11 @@
                 <% end %>
             </span>
             <span class="icon-text is-small is-centered has-text-link" id='comments-count'>
-                <p><%= post.comments.count %></p>
+                <p id='comment-count-<%=post.slug%>'><%= post.comments.count %></p>
                 <i class="fas fa-comments"></i>
             </span>
             <span class="icon-text is-small is-centered has-text-link" id='share'>
-                <p><%= post.shares.count %></p>
+                <p id='shares-count-<%=post.slug%>'><%= post.shares.count %></p>
                 <button popovertarget='share-post-<%= post.slug%>'><i class="fas fa-share is-medium"></i></button>
                     <div popover id='share-post-<%= post.slug%>' data-controller='popover' data-popover-target='div'>
                         <p id='sharing-title'>Sharing post</p>
@@ -70,9 +70,9 @@
             <% comments.each do |comment| %>
                 <%= render partial: 'comments/comment', locals: {comment: comment}%>
             <% end %>
+        </div>
             <% if location == 'feed' && post.comments.count > 3 %>
                 <%= link_to 'View more comments', post_path(post, is_page: false), class: 'more-comments'%>
             <% end %>
-        </div>
     </div>
 </div>

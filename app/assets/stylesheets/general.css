@@ -359,7 +359,7 @@ a>#post-user:hover {
 #new-comment > form {
     width: 90%;
 }
-#new-comment > form > #comment_body {
+#new-comment > form > input[id*='comment_body_'] {
     height: 25px;
     border-radius: 50px;
     border: 1px solid rgba(0,0,0,0.3);
@@ -939,7 +939,7 @@ input.edit-form, div.edit-form, .edit-form {
     align-items: center;
     gap: 10px;
     background-color: #7f909e;
-    height: 100vh;
+    min-height: 100vh;
 }
 .user-card {
     width: 50%;
@@ -971,7 +971,7 @@ input.edit-form, div.edit-form, .edit-form {
     align-items: center;
     border-radius: 15px;
     padding-top: 5%;
-    height: 100vh;
+    min-height: 100vh;
 }
 .list-request-item {
     padding: 10px;
@@ -1028,7 +1028,7 @@ input.edit-form, div.edit-form, .edit-form {
     /* background-color: #ededed; */
     background-color: white;
     width: 35%;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 #chats-container {
     height: 90vh;
@@ -1045,7 +1045,7 @@ input.edit-form, div.edit-form, .edit-form {
 #messages {
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: scroll;
     height: 75%;
     font-size: 1rem;
 }
@@ -1259,4 +1259,15 @@ input[type=file]::file-selector-button {
 .index-link {
     display: flex;
     justify-content: center;
+}
+#signup {
+    z-index: 1;
+}
+.field_with_errors > input {
+    min-height: 30px;
+    border-radius: 5px;
+    border: 1px solid red;
+    background-color: rgba(31.8, 28.6, 34.5, 0.7);
+    padding: 10px;
+    color: ivory;
 }

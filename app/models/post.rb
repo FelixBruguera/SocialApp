@@ -8,5 +8,6 @@ class Post < ApplicationRecord
     has_many :notifications, dependent: :destroy
     friendly_id :uuid, use: :slugged
     belongs_to :page, optional: true
+    belongs_to :shared_post, class_name: 'Post', foreign_key: 'shared_post', optional: true
     validates :body, presence: {message: "Can't be blank"}
 end

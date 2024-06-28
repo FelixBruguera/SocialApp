@@ -23,7 +23,7 @@ class PostTest < ActiveSupport::TestCase
   test 'shared posts' do
     post = Post.first
     assert_not post.shares.nil?, 'it should get the shared posts'
-    assert post.shares.first.shared_post == post.id, 'shared post should link to the original post'
+    assert post.shares.first.shared_post == post, 'shared post should link to the original post'
   end
 
   test 'reactions relationship' do

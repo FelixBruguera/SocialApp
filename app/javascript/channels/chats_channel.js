@@ -25,6 +25,8 @@ import consumer from "channels/consumer"
           messageDisplay.insertAdjacentHTML('beforeend', this.template(data, currentUser))}
       },
       template(data, currentUser) {
+        const messageInput = document.querySelector('#message-input')
+        messageInput.value = ''
         if (data.is_date == true) {
           return `<div class='chat-date'>
                     <p class='date'>${data.message}</p>
