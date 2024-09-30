@@ -13,4 +13,18 @@
  *= require_tree .
  *= require_self
  */
- @import "bulma";
+@import "bulma";
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+:root {
+    --logo: #23468c;
+    --bg: #FEFBF3;
+    --text-color: azure;
+    --comment-bg: #F0F2F5;
+    --links: #485fc7;
+}
+body {
+    font-size: 20px;
+    background-color: #7f909e;
+    min-height: 100dvh;
+}

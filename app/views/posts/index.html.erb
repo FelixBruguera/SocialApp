@@ -6,8 +6,8 @@
 <div id='feed'>
             <%= turbo_frame_tag id='new-post-frame', src: new_post_path(post_type: 'new')%>
 <div id='content'>
-    <div id='links'>
-    </div>
+    <section id='links'>
+    </section>
     <div id="posts-container">
         <div id="posts">
             <% @feed.each do |post| %>

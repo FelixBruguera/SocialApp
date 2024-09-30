@@ -1,0 +1,115 @@
+#landing {
+    height: 100vh;
+    z-index: 1;
+    display: grid;
+    grid-template: 5fr 1fr/ 1fr 1fr;
+    font-size: 1.2rem;
+    align-items: center;
+}
+#landing-left {
+    font-family: 'Kanit';
+    color: var(--bg);
+    font-weight: 800;
+    z-index: 1;
+    grid-area: 1 / 1 / 2 / 1;
+    text-align: center;
+    font-size: 5rem;
+}
+#landing-left:hover {
+    cursor: pointer;
+}
+#landing-right {
+    font-weight: 800;
+    font-size: 1rem;
+    z-index: 1;
+    grid-area: 1 / 2 / 2 / 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.bg-1, .bg-2, .bg-3{
+    display: none;
+}
+.background-img {
+    display: flex;
+    position: absolute;
+    grid-area: 1 / 1;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}
+.credits-1, .credits-2, .credits-3{
+    display: none;
+}
+.credits {
+    grid-area: 2 / 1 / 3;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    gap: 5px;
+    background-color: rgba(0,0,0,0.5);
+    width: fit-content;
+    padding: 5px;
+    font-size: 1rem;
+}
+.credits > a {
+    color: lightgray;
+    font-weight: 800;
+}
+#form-names {
+    display: flex;
+    gap: 30px;
+}
+#new_user {
+    color: azure;
+    display: flex;
+    flex-direction: column;
+}
+#landing-right-form {
+    font-weight: 800;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 1;
+    grid-area: 1 / 1;
+}
+.field > input {
+    min-height: 30px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-color: rgba(31.8,28.6,34.5, 0.7);
+    padding: 10px;
+    color: ivory;
+}
+.field {
+    display: flex;
+    min-width: 300px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#landing-button {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    color: azure;
+    font-size: 0.8rem;
+}
+#landing-button:hover {
+    text-decoration: none;
+    font-weight: 600;
+}
+#landing-options {
+    padding-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+#landing-login {
+    min-width: 60%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    color: ivory;
+    background-color: rgba(31.8,28.6,34.5, 0.7);
+    font-size: 1rem;
+}
+#landing-login:hover {
+    font-weight: 600;
+    background-color: var(--links)
+}

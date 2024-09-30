@@ -1,0 +1,169 @@
+.hero-container {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 10dvh;
+    padding: 2%;
+    border-bottom: 1px solid lightgrey;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+}
+.hero-title {
+    color: var(--logo);
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: "Kanit", sans-serif;
+}
+#hero-icons {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+.hero-right {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    gap: 30px;
+}
+.hero-profile-pic {
+    cursor: pointer;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50px;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+.hero-count-zero {
+    display: none;
+}
+#menu {
+    position-anchor: --nav-button;
+    left: calc(anchor(left) - 3%);
+    top: calc(anchor(top) + 8%);
+    flex-direction: column;
+    align-items: start;
+    width: clamp(10%, 135px, 20%);
+    background-color: white;
+    position: fixed;
+    padding: 1%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+#menu::after {
+    transform: scaleY(1%);
+    transform-origin: top;
+}
+@keyframes menu-slide {
+    0% { 
+        transform: scaleY(1%);
+        transform-origin: top;
+        opacity: 10%;
+    }
+    100% { 
+        transform: scaleY(100%); 
+        opacity: 100%;
+    }
+
+}
+#nav {
+    margin-right: 30px;
+    anchor-name: --nav-button;
+}
+
+#friends {
+    anchor-name: --friends;
+}
+#friendship {
+    margin: 0;
+    border: none;
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    position-anchor: --friends;
+    top: calc(anchor(top) + 6%);
+    left: calc(anchor(left) - 10%);
+}
+#notifications-bell {
+    anchor-name: --notibell;
+}
+#notif {
+    margin: 0;
+    border: none;
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    position: absolute;
+    position-anchor: --notibell;
+    top: calc(anchor(top) + 6%);
+    left: calc(anchor(left) - 10%);
+}
+#friends, #chat-link, #notifications-bell {
+    background-color: white;
+    padding: 8px;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+}
+#friends:hover, #chat-link:hover, #notifications-bell:hover {
+    animation: button-hover 0.3s forwards;
+}
+@keyframes button-hover {
+    0% {
+        border: 1px solid white;
+    }
+    100% {
+        transform: scale(1.1);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        background-color: var(--logo);
+        color: white;
+    }
+}
+.nav-button {
+    background-color: white;
+    border: none;
+    transition: transform 0.3s ease-in-out;
+}
+.nav-button:hover {
+    transform: scale(1.1);
+}
+@media (min-width: 1800px) {
+    #friendship {
+        left: calc(anchor(left) - 5%);
+    }
+    #notif {
+        left: calc(anchor(left) - 5%);
+    }
+    #menu {
+        top: calc(anchor(top) + 6.5%);
+    }
+    #hero-icons {
+        font-size: 2rem;
+    }
+    #friends, #chat-link, #notifications-bell {
+        font-size: 2rem;
+    }
+}
+@media (max-width: 800px) {
+    #friendship {
+        left: calc(anchor(left) - 20%);
+    }
+    #notif {
+        left: calc(anchor(left) - 30%);
+    }
+    #menu {
+        left: calc(anchor(left) - 10%);
+    }
+    #friends, #chat-link, #notifications-bell {
+        font-size: 0.8rem;
+    }
+}

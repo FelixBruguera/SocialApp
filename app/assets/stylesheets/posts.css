@@ -1,0 +1,232 @@
+#posts {
+    display: flex;
+    flex-direction: column;
+    grid-area: 2 / 2 / 2 / 3;
+    align-items: center;
+    gap: 10px;
+}
+.post {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    gap: 30px;
+    width: 50%;
+    padding: 20px;
+    align-items: baseline;
+    justify-content: space-between;
+    background-color: white;
+    margin: 2% auto auto auto;
+    box-shadow: 3px 2px 5px #00000075;
+    border-radius: 5px
+}
+.post-feed {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    gap: 30px;
+    border: 1px solid rgba(0,0,0,0.15);
+    width: 500px;
+    padding: 20px;
+    align-items: baseline;
+    justify-content: space-between;
+    background-color: white;
+    box-shadow: 3px 2px 5px #00000075;
+    border-radius: 5px
+}
+.post-feed:hover {
+    border: 1px solid rgba(0,0,0,0.3);
+}
+.post-user {
+    grid-area: 1 / 1;
+    color: black;
+}
+a>#post-user {
+    color: whitesmoke;
+    font-weight: 400;
+}
+a>#post-user:hover {
+    color: ivory;
+    font-weight: 800;
+    color: var(--logo);
+}
+.post-user:hover {
+    font-weight: 500;
+    color: var(--logo);
+}
+.post-date {
+    grid-area: 1 / 1 / 2 / 1 ;
+    font-size: 0.8rem;
+}
+.post-body {
+    font-size: 1rem;
+}
+.post-info {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 5px 0px 5px 0px;
+}
+.post-lower {
+    width: 100%;
+}
+#post-show {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.link-post {
+    color: #4a4a4a;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: baseline;
+}
+div[id*='share-post-'] {
+    height: 20%;
+    width: 40%;
+    gap: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+div[id*='share-post-']::backdrop {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+#sharing-form {
+    display: flex;
+    width: 100%;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    height: 70%;
+    border-radius: 20px;
+    gap: 10px;
+}
+#sharing-form > form {
+    display: flex;
+    gap: 10px;
+    width: 60%;
+}
+#sharing-form > form > #new-post-fields {
+    width: 80%;
+}
+#sharing-form > form > #new-post-fields > #text-field{
+    padding: 5px;
+    width: 100%;
+    height: 80%;
+}
+.shared_post {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    gap: 30px;
+    border: 1px solid rgba(0,0,0,0.3);
+    width: 100%;
+    padding: 20px 20px 0px 20px;
+    align-items: baseline;
+    justify-content: space-between;
+    background-color: white;
+}
+#sharing-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--logo);
+}
+#share > button {
+    background-color: white;
+    border: none;
+    color: var(--links);
+    cursor: pointer;
+}
+.load-posts, .load-posts-profile {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.load-posts > a:hover, .load-posts-profile > a:hover {
+    background-color: rgba(72, 95, 199,0.8);
+}
+.load-posts > a, .load-posts-profile > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    color: var(--bg);
+    background-color: rgba(72, 95, 199,0.6);
+    height: 30px;
+    border-radius: 5px;
+    width: 100%;
+}
+.load-posts-profile > a {
+    width: 60%;
+}
+.no-posts {
+    background-color: lightgrey;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    border-radius: 5px;
+}
+#post-image-field {
+    display: flex;
+    align-items: center;
+}
+#reactions, #comments-count, #share {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.unliked {
+    color: lightgrey;
+}
+.unliked:hover {
+    color: var(--logo);
+}
+#like {
+    display: flex;
+    gap: 10px;
+    width: 33%;
+    height: 20%;
+    background-color: azure;
+    border: none;
+}
+#like:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+#new-post {
+    grid-area: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 15px;
+}
+#new-post > form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+#new-post-fields > #text-field {
+    padding: 5px;
+    height: 20px;
+    width: 100%;
+    border-radius: 50px;
+    border: 1px solid black;
+}
+#new-post > form > #send-post {
+    border-radius: 50px;
+    border: 1px solid black;
+    background-color: var(--logo);
+    color: azure;
+    font-weight: 800;
+}
+#new-post-form {
+    width: 85%;
+}
