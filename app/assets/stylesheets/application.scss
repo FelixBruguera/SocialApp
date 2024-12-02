@@ -22,9 +22,21 @@
     --text-color: azure;
     --comment-bg: #F0F2F5;
     --links: #485fc7;
+    overflow-y: auto;
 }
 body {
     font-size: 20px;
     background-color: #7f909e;
     min-height: 100dvh;
+}
+::-webkit-scrollbar {
+    width: 12px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: white;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--logo);
+    border-radius: 100px;
 }

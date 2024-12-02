@@ -2,7 +2,8 @@
     display: flex;
     /* grid-template: 1fr 6fr/ 1fr 3fr 1fr; */
     flex-direction: column;
-    background-color: #7f909e;
+    /* background-color: #7f909e; */
+    background-color: #53626e;
     height: 100%;
     padding-top: 2%;
     gap: 30px;

@@ -1,0 +1,10 @@
+<% if message.is_date %>
+    <div class='chat-date'>
+        <p class='date'><%= message.body %></p>
+    </div>
+<% else %>
+    <div class= <%= "message-#{message.user.slug}" %> >
+        <p><%= message.body %></p>
+        <p class="message-date"><%= message.created_at.strftime('%R')%></p>
+        </div>
+<% end %>

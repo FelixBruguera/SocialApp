@@ -16,7 +16,7 @@
     justify-content: space-between;
     background-color: white;
     margin: 2% auto auto auto;
-    box-shadow: 3px 2px 5px #00000075;
+    box-shadow: 0px 4px 4px #00000030, 0px 12px 12px #00000015;
     border-radius: 5px
 }
 .post-feed {
@@ -206,7 +206,7 @@ div[id*='share-post-']::backdrop {
     padding: 15px;
     background-color: white;
     border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 15px;
+    border-radius: 5px;
 }
 #new-post > form {
     display: flex;
@@ -220,12 +220,8 @@ div[id*='share-post-']::backdrop {
     border-radius: 50px;
     border: 1px solid black;
 }
-#new-post > form > #send-post {
-    border-radius: 50px;
-    border: 1px solid black;
-    background-color: var(--logo);
-    color: azure;
-    font-weight: 800;
+#send-post {
+    margin-top: 1%;
 }
 #new-post-form {
     width: 85%;

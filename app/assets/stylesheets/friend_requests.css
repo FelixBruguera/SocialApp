@@ -14,19 +14,6 @@
     gap: 30px;
     grid-area: 1 / 3 / 1 / 3;
 }
-.requests-count {
-    color: white;
-    height: 10px;
-    width: 10px;
-    background-color: red;
-    position: absolute;
-    margin-left: 1%;
-    border-radius: 10px;
-    top: 20%;
-    font-weight: 800;
-    font-size: 13px;
-    text-align: center;
-}
 .request-sent {
     background-color: var(--links);
     pointer-events: none;

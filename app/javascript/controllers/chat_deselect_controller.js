@@ -4,6 +4,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ['chat']
   clear() {
-    this.chatTargets.forEach(div => div.style.backgroundColor = 'white')
+    this.chatTargets.forEach(div => div.classList.remove('selected-chat'))
   }
 }

@@ -16,17 +16,18 @@ class MessagesController < ApplicationController
         data = message_params_full
         id = data[:chat_id]
         chat = Chat.find(id)
-        check_date = chat.messages.filter {|mes| mes.created_at.strftime("%D") == DateTime.now.strftime('%D')}
+        check_date = chat.messages.filter {|mes| mes.created_at.strftime("%D") == DateTime.current.strftime('%D')}
         if check_date.length == 0
-            @message = Message.create(user_id: current_user.id, chat_id: id, body: DateTime.now.strftime('%D'), is_date: true, seen: true)
-            ActionCable.server.broadcast("ChatsChannel", {message: @message.body, is_date: true, chat_id: @message.chat.slug})
+            @message = Message.create(user_id: current_user.id, chat_id: id, body: DateTime.current.strftime('%D'), is_date: true, seen: true)
+            @message.broadcast(chat, data[:user])
         end
-        @message = Message.create(data)
-            ActionCable.server.broadcast("ChatsChannel", {
-                message: @message.body,
-                chat_id: @message.chat.slug,
-                current_user: current_user.slug,
-                date: @message.created_at.strftime("%R")})
+        @message = Message.create(data.except(:user))
+        @message.broadcast(chat, data[:user])
+        respond_to do |format|
+            format.turbo_stream do
+                render turbo_stream: turbo_stream.replace("message-input", partial: "messages/message_input")
+            end
+        end
     end
 
     def show
@@ -50,12 +51,13 @@ class MessagesController < ApplicationController
     private
 
     def message_params
-        params.require(:message).permit(:chat_id, :body, :seen)
+        params.require(:message).permit(:chat_id, :body, :seen, :user_id)
     end
 
     def message_params_full
         data = message_params
-        data[:user_id] = current_user.id
+        data[:user_id] = User.friendly.find(data[:user_id]).id
+        data[:user] = User.friendly.find(data[:user_id]).slug
         data[:chat_id] = Chat.friendly.find(data[:chat_id]).id
         data
     end

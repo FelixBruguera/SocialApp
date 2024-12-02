@@ -11,11 +11,12 @@
     <div class="hero-right">
         <div id="hero-icons">
             <span data-controller='friendrequests'>
-                <button popovertarget='friendship' id='friends' data-action='click-> friendrequests#clear'>
                     <% if current_user.friend_requests.where(ignored: false).count > 0 %>
-                        <div class='requests-count' data-friendrequests-target='count'></div>
+                        <button popovertarget='friendship' id='colored-button' data-friendrequests-target="coloredButton" data-action='click-> friendrequests#clear'>
+                    <% else %>
+                        <button popovertarget='friendship' id='friends' data-action='click-> friendrequests#clear'>
                     <% end %>
-                        Friends
+                    <p data-friendrequests-target='text'>Friends</p>
                 </button>
                 <%= render partial: 'friend_requests/requests_bar', locals: {user: current_user} %>
             </span>
@@ -23,17 +24,19 @@
                 <%= link_to chats_path do%>
                     <% unseen_chats = get_unseen_total(get_chats(current_user), current_user.id)%>
                     <% if unseen_chats > 0 %>
-                        <div class='chats-count'><%=unseen_chats%></div>
+                        <button id="colored-button">Chat</button>
+                    <% else %>
+                        <button id="chat-link">Chat</button>
                     <% end %>
-                    <button id="chat-link">Chat</button>
                 <% end %>
             </span>
             <span data-controller='notifications'>
-                <button popovertarget='notif' id='notifications-bell'>
                     <% if current_user.notifications.where(seen:false).count > 0 %>
-                        <div class='notifications-count' data-notifications-target='count'><%= current_user.notifications.where(seen:false).count%></div>
+                        <button popovertarget='notif' data-notifications-target="coloredButton" id='colored-button' data-action="click-> notifications#openBar">
+                    <% else %>
+                        <button popovertarget='notif' id='notifications-bell'>
                     <% end %>
-                    Notifications
+                    <p>Notifications</p>
                 </button>
                 <%= render partial: 'notifications/notification_bar', locals: {user: current_user} %>
             </span>

@@ -31,7 +31,7 @@
             <% if post_type == 'shared' %>
                 <%= f.submit 'Share', class:'button is-link is-small', 'data-action': 'click->popover#close'%>
             <% else %>
-                <%= f.submit 'Send', class:'button is-link is-small'%>
+                <%= f.submit 'Send', class:'button is-small is-rounded unfocused', id: 'send-post'%>
             <% end %>
         <% end %>
     </div>

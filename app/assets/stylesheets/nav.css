@@ -72,6 +72,19 @@
     margin-right: 30px;
     anchor-name: --nav-button;
 }
+.requests-count {
+    position-anchor: --friends;
+    left: calc(anchor(left) + -1%);
+    color: white;
+    height: 10px;
+    width: 10px;
+    background-color: red;
+    position: absolute;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 13px;
+    text-align: center;
+}
 
 #friends {
     anchor-name: --friends;
@@ -100,7 +113,7 @@
     top: calc(anchor(top) + 6%);
     left: calc(anchor(left) - 10%);
 }
-#friends, #chat-link, #notifications-bell {
+#friends, #chat-link, #notifications-bell, #colored-button {
     background-color: white;
     padding: 8px;
     height: 80%;
@@ -113,7 +126,12 @@
     color: rgba(0, 0, 0, 0.6);
     border-radius: 15px;
 }
-#friends:hover, #chat-link:hover, #notifications-bell:hover {
+#colored-button {
+    color: white;
+    background-color: var(--logo);
+    /* anchor-name: --notibell; */
+}
+#friends:hover, #chat-link:hover, #notifications-bell:hover, #colored-button:hover {
     animation: button-hover 0.3s forwards;
 }
 @keyframes button-hover {
