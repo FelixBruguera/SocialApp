@@ -4,7 +4,7 @@
 <body>
 <%= render partial:'layouts/hero', locals: {'status': 'feed'}%>
 <div id="notification-list" data-controller='notifications'>
-    <%= link_to 'Mark all as seen', '/update_notifications', data: {turbo_method: :post, 'action': 'click->notifications#readList'}, remote: true, class: 'notifications-read' %>
+    <%= link_to 'Mark all as seen', '/update_notifications', data: {turbo_method: :post, 'action': 'click->notifications#readList'}, remote: true, class: 'notifications-read button is-link' %>
     <% unless @new.empty? %>
         <% @new.each do |new_noti|%>
             <div class='noti-list' data-notifications-target='notis'>

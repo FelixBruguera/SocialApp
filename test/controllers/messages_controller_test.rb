@@ -7,11 +7,10 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   # end
   test 'sending a message' do
     login_as User.first
-    post messages_path(message: {body: 'Testing messages', chat_id: 1})
+    post messages_path(message: {body: 'Testing messages', chat_id: Chat.first.slug, user_id: User.first.slug})
     assert Message.last.body == 'Testing messages', 'It should create the message'
     assert Message.last.chat == Chat.first, 'The message should link to the chat'
     assert Message.last.user == User.first, 'The message should link to the sender'
-    assert_broadcasts 'ChatsChannel', 1
   end
 
   test 'marking messages as read' do

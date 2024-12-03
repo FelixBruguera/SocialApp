@@ -154,6 +154,12 @@
 .nav-button:hover {
     transform: scale(1.1);
 }
+#menu > li {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5%;
+}
 @media (min-width: 1800px) {
     #friendship {
         left: calc(anchor(left) - 5%);
@@ -163,6 +169,7 @@
     }
     #menu {
         top: calc(anchor(top) + 6.5%);
+        width: 30%;
     }
     #hero-icons {
         font-size: 2rem;
@@ -171,7 +178,7 @@
         font-size: 2rem;
     }
 }
-@media (max-width: 800px) {
+@media (max-width: 600px) {
     #friendship {
         left: calc(anchor(left) - 20%);
     }

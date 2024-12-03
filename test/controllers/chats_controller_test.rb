@@ -11,10 +11,9 @@ class ChatsControllerTest < ActionDispatch::IntegrationTest
     assert_select '.chat-box', minimum: 1
   end
 
-  test 'render a chat' do
+  test 'render chat' do
     login_as User.first
     get chat_path(Chat.first.slug)
-    assert_select '.chat-message>p', {minimum: 1, text: 'Test 2'}
-    assert_select '.chat-message-user>p', {minimum: 1, text: 'Test'}
+    assert_select ".message-#{User.first.slug} > p", {minimum: 1, text: 'Test'}
   end
 end

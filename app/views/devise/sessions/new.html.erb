@@ -9,12 +9,6 @@
         <div id='landing-left'>
             <p>SocialApp</p>
         </div>
-        <div class='credits-1 credits'>
-            <span class="icon is-left has-text-light">
-                <i class="fas fa-camera"></i>
-            </span>
-            <a href="https://unsplash.com/@mohamadaz" target='_blank' >Mohammad Alizade</a>
-        </div>
         <div id='landing-right' data-controller='landing'>
         <%= turbo_frame_tag id='login', 'data-landing-target': 'login' do %>
           <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {turbo: false}) do |f| %>
@@ -39,7 +33,6 @@
           <% end %>
         <% end %>
             <div id="landing-options">
-                <span class="icon is-medium is-left"></span>
                 <%= button_to "Login with Google", user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-medium unfocused is-ghost', id:'landing-button', 'data-landing-target': 'google'%>
                 <%= link_to '/guest?is_guest=true', id: 'sign-up-link' do %>
                     <button class='button is-medium unfocused is-ghost' id='landing-button' data-landing-target='guest'>Login as Guest</button>
@@ -50,6 +43,12 @@
                     <% end %>
                 <% end %>
             </div>
+        </div>
+        <div class='credits-1 credits'>
+            <span class="icon is-left has-text-light">
+                <i class="fas fa-camera"></i>
+            </span>
+            <a href="https://unsplash.com/@mohamadaz" target='_blank' >Mohammad Alizade</a>
         </div>
     </div>
 </body>

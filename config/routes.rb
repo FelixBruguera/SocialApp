@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :pages
   post 'update_notifications', to: 'notifications#update_notifications'
   post 'load_posts(:page)', to: 'posts#index'
-  post 'users/:id(:page)', to: 'users#show'
+  post 'users/:username(:page)', to: 'users#show'
   post 'pages/:id(:page)', to: 'pages#show'
   post 'messages_read', to: 'messages#update'
   get 'welcome', to: 'posts#welcome'

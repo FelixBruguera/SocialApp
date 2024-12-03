@@ -17,7 +17,7 @@
                     <% elsif user == current_user %>
                     <% elsif status == 'noFriends' %>
                         <%= link_to friend_requests_path(receiver: user), data: {turbo_method: :post, controller: 'friendrequests'} do %>
-                            <button class='button is-small unfocused' data-friendrequests-target='button' data-action='click->friendrequests#change'>Add Friend</button>
+                            <button class='button is-small is-light' data-friendrequests-target='button' data-action='click->friendrequests#change'>Add Friend</button>
                         <% end %>
                     <% else%>
                             <button class='button is-small unfocused' disabled><%= @friendship %></button>

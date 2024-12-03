@@ -182,3 +182,38 @@ input.edit-form, div.edit-form, .edit-form {
     border-radius: 5px;
     text-align: center;
 }
+@media (max-width: 600px) {
+    .cover-pic {
+        height: 25%;
+    }
+    #profile-info {
+        margin-top: 40%;
+    }
+    #user-profile-pic, .photo {
+        height: 80px;
+        width: 80px;
+    }
+    #profile-name {
+        font-size: 1rem;
+    }
+    #profile-age > p, #profile-location {
+        font-size: 0.8rem;
+    }
+    .flag {
+        height: 15px;
+    }
+    #profile-pictures {
+        width: 90%;
+        height: 45dvh;
+    }
+    .cover-pic {
+        width: 90%;
+    }
+    #profile-lower {
+        flex-direction: column;
+    }
+    #user-boxes {
+        margin-left: 5%;
+        width: 90%;
+    }
+}
