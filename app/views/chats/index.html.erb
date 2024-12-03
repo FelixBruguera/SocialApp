@@ -25,7 +25,7 @@
                         <% unless @last_messages[chat.slug].nil? %>
                             <p class='post-user' id='user-last-message'><%= @last_messages[chat.slug][:body] %></p>
                         <% end %>
-                            <p> <%= @last_messages[chat.slug][:created_at] %> </p>
+                            <p class="last-message-date"> <%= @last_messages[chat.slug][:created_at] %> </p>
                     </div>
                 </div>
             <% end %>

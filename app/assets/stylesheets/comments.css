@@ -9,6 +9,9 @@
 }
 #new-comment > form {
     width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 #new-comment > form > input[id*='comment_body_'] {
     height: 25px;
@@ -40,4 +43,7 @@
     display: flex;
     justify-content: center;
     padding-top: 10px;
+}
+@media (max-width: 600px) {
+
 }

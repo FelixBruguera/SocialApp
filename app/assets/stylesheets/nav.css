@@ -184,4 +184,14 @@
     #friends, #chat-link, #notifications-bell {
         font-size: 0.8rem;
     }
+    .hero-container {
+        justify-content: start;
+        gap: 5%;
+    }
+    .hero-title {
+        font-size: 1.6rem;
+    }
+    .hero-right {
+        width: 45%;
+    }
 }

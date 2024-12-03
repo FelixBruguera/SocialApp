@@ -14,9 +14,9 @@
                     <% if current_user.friend_requests.where(ignored: false).count > 0 %>
                         <button popovertarget='friendship' id='colored-button' data-friendrequests-target="coloredButton" data-action='click-> friendrequests#clear'>
                     <% else %>
-                        <button popovertarget='friendship' id='friends' data-action='click-> friendrequests#clear'>
+                        <button popovertarget='friendship' id='friends' data-action='click-> friendrequests#clear' data-friendrequests-target='text'>
                     <% end %>
-                    <p data-friendrequests-target='text'>Friends</p>
+                    Friends
                 </button>
                 <%= render partial: 'friend_requests/requests_bar', locals: {user: current_user} %>
             </span>
@@ -26,7 +26,9 @@
                     <% if unseen_chats > 0 %>
                         <button id="colored-button">Chat</button>
                     <% else %>
-                        <button id="chat-link">Chat</button>
+                        <button id="chat-link">
+                            Chat
+                        </button>
                     <% end %>
                 <% end %>
             </span>
@@ -36,7 +38,7 @@
                     <% else %>
                         <button popovertarget='notif' id='notifications-bell'>
                     <% end %>
-                    <p>Notifications</p>
+                    Notifications
                 </button>
                 <%= render partial: 'notifications/notification_bar', locals: {user: current_user} %>
             </span>

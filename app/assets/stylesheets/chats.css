@@ -165,25 +165,20 @@ div[id*="last-message-"] {
     font-size: 0.8rem;
 }
 #chats-mobile {
-    width: 1%;;
+    /* width: 10%; */
+    /* display: none; */
 }
 @media (max-width: 500px) {
     #chats {
-        width: 100%;
-        z-index: 0;
+        width: 18%;
     }
-    #chats:active {
-        width: 0%;
+    .user-div {
+        display: none;
+    }
+    .chat-box {
+        padding: 5px 5px 5px 10px;
     }
     #chat {
-        width: 0%;
+        width: 82%;
     }
-    .chat-mobile {
-        z-index: 1;
-        width: 100%;
-    }
-    #chats-container {
-        position: absolute;
-    }
-    
 }
